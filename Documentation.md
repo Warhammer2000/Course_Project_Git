@@ -310,7 +310,7 @@
 - Для применения миграций используйте команды:
 
   ```
-  bashКопировать кодdotnet ef migrations add InitialCreate
+  dotnet ef migrations add InitialCreate
   dotnet ef database update
   ```
 
@@ -319,8 +319,6 @@
 - Получение всех коллекций:
 
   ```
-  csharp
-  Копировать код
   var collections = _context.Collections.ToList();
   ```
 
