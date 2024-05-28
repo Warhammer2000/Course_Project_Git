@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Access Denied" xml:space="preserve">
+    <value>доступ запрещен</value>
+  </data>
+	<data name="Only the author or an admin can edit this collection." xml:space="preserve">
+    <value>Редактировать эту коллекцию может только автор или администратор.</value>
+  </data>
+	<data name="Only the author or an admin can delete this collection." xml:space="preserve">
+    <value>Удалить эту коллекцию может только автор или администратор.</value>
+  </data>
+</root>

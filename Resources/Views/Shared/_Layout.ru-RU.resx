@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="My ASP.NET Application" xml:space="preserve">
+    <value>Мое приложение ASP.NET</value>
+  </data>
+	<data name="Home" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+	<data name="Privacy" xml:space="preserve">
+    <value>Конфиденциальность</value>
+  </data>
+	<data name="My Account" xml:space="preserve">
+    <value>Мой аккаунт</value>
+  </data>
+	<data name="Logout" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+	<data name="Login" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+	<data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+	<data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+	<data name="Switch Theme" xml:space="preserve">
+    <value>Переключить тему</value>
+  </data>
+	<data name="User List" xml:space="preserve">
+    <value>Список Пользователей</value>
+  </data>
+</root>

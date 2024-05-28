@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Not Found" xml:space="preserve">
+    <value>Страница не найдена</value>
+  </data>
+	<data name="Email" xml:space="preserve">
+    <value>Электронная почта</value>
+  </data>
+	<data name="The collection you are trying to export does not exist." xml:space="preserve">
+    <value>Коллекция, которую вы пытаетесь экспортировать, не существует.</value>
+  </data>
+	<data name="The collection you are trying to delete does not exist." xml:space="preserve">
+    <value>Коллекция, которую вы пытаетесь удалить, не существует.</value>
+  </data>
+	<data name="The collection you are trying to edit does not exist." xml:space="preserve">
+    <value>Коллекция, которую вы пытаетесь отредактировать, не существует.</value>
+  </data>
+	<data name="The collection you are trying to view does not exist." xml:space="preserve">
+    <value>Коллекция, которую вы пытаетесь просмотреть, не существует.</value>
+  </data>
+</root>

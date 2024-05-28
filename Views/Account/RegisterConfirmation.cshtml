@@ -1,0 +1,8 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+	ViewData["Title"] = Localizer["Register Confirmation"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<p>@Localizer["Thank you for registering. Please check your email to confirm your account."]</p>
+<p>@Localizer["Email:"] @ViewBag.Email</p>

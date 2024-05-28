@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Confirm Email" xml:space="preserve">
+        <value>Подтвердить эл. почту</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+</root>

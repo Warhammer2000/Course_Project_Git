@@ -1,0 +1,104 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@model CourseProjectItems.ViewModels.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = Localizer["Home Page"];
+}
+
+<h1>@Localizer["Search Results"] <i class="fas fa-search"></i></h1>
+
+<form method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="@Localizer["Search..."]" />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">
+                @Localizer["Search"] <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+@if (Model.SearchResults.Items.Any() || Model.SearchResults.Collections.Any())
+{
+    <h2>@Localizer["Items"] <i class="fas fa-box-open"></i></h2>
+    <ul class="list-group mb-4">
+        @foreach (var item in Model.SearchResults.Items)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="fas fa-tag"></i> @item.Name - @item.Description
+                </span>
+                <a asp-action="Details" asp-controller="Items" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                    @Localizer["Details"] <i class="fas fa-eye"></i>
+                </a>
+            </li>
+        }
+    </ul>
+
+    <h2>@Localizer["Collections"] <i class="fas fa-th-large"></i></h2>
+    <ul class="list-group">
+        @foreach (var collection in Model.SearchResults.Collections)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="fas fa-folder"></i> @collection.Name - @collection.Description
+                </span>
+                <a asp-action="Details" asp-controller="Collections" asp-route-id="@collection.Id" class="btn btn-info btn-sm">
+                    @Localizer["Details"] <i class="fas fa-eye"></i>
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">@Localizer["No results found."] <i class="fas fa-exclamation-circle"></i></p>
+}
+
+<style>
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .list-group-item .btn {
+            margin-left: 10px;
+        }
+</style>
+
+<h1>@Localizer["All Collections"] <i class="fas fa-th-large"></i></h1>
+
+@if (Model.Collections.Any())
+{
+    <div class="row">
+        @foreach (var collection in Model.Collections)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            @collection.Name <i class="fas fa-book"></i>
+                        </h4>
+                        <p class="card-text">@collection.Description</p>
+                        <p class="card-text">
+                            <small class="text-muted">@collection.Category <i class="fas fa-tag"></i></small>
+                        </p>
+                        <a asp-action="Details" asp-controller="Collections" asp-route-id="@collection.Id" class="btn btn-primary">
+                            @Localizer["View Items"] <i class="fas fa-eye"></i>
+                        </a>
+                        <a asp-action="ExportToCsv" asp-controller="Collections" asp-route-id="@collection.Id" class="btn btn-primary btn-sm">
+                            <i class="fas fa-file-csv"></i> @Localizer["Export to CSV"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>@Localizer["No collections found."] <i class="fas fa-exclamation-circle"></i></p>
+}
+
+<p class="text-info">@Localizer["Current Language:"] @Thread.CurrentThread.CurrentCulture.DisplayName <i class="fas fa-language"></i></p>

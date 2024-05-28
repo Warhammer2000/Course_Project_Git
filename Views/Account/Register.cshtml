@@ -1,0 +1,54 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@model CourseProjectItems.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = Localizer["Register"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form asp-action="Register" method="post">
+                <h4>@Localizer["Create a new account."]</h4>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="Email">@Localizer["Email"]</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserName">@Localizer["User Name"]</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">@Localizer["Password"]</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword">@Localizer["Confirm Password"]</label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">@Localizer["Register"]</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a asp-action="Login">@Localizer["Already have an account? Log in"]</a>
+                    </p>
+                </div>
+                <p>
+                    <a href="~/">@Localizer["Back to Home"]</a>
+                </p>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

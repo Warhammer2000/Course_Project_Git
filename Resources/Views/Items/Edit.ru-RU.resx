@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Edit Item" xml:space="preserve">
+        <value>Редактировать элемент</value>
+    </data>
+	<data name="Name" xml:space="preserve">
+        <value>Название</value>
+    </data>
+	<data name="Description" xml:space="preserve">
+        <value>Описание</value>
+    </data>
+	<data name="Tags" xml:space="preserve">
+        <value>Теги</value>
+    </data>
+	<data name="Photo" xml:space="preserve">
+        <value>Фото</value>
+    </data>
+	<data name="Additional Fields" xml:space="preserve">
+        <value>Дополнительные поля</value>
+    </data>
+	<data name="Add Field" xml:space="preserve">
+        <value>Добавить поле</value>
+    </data>
+	<data name="Save" xml:space="preserve">
+        <value>Сохранить</value>
+    </data>
+	<data name="Back to List" xml:space="preserve">
+        <value>Назад к списку</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+	<data name="Item" xml:space="preserve">
+        <value>Элемент</value>
+    </data>
+</root>

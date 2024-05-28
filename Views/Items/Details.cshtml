@@ -1,0 +1,151 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@using System.Security.Claims
+@using CourseProjectItems.Data
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CourseProjectItems.ViewModels.ItemViewModel
+
+@{
+    ViewData["Title"] = Localizer["Details"];
+}
+
+<h1>@Localizer["Details"] <i class="fas fa-info-circle"></i></h1>
+
+<div>
+    <h4>@Localizer["Item"] <i class="fas fa-box"></i></h4>
+    <hr />
+    <dl class="row">
+        <p>
+            <strong>@Localizer["Created by"]:</strong>
+            <span class="badge badge-info">
+                <i class="fas fa-user"></i> @(Model.AuthorUserName == null ? "Admin" : Model.AuthorUserName)
+            </span>
+        </p>
+        <dt class="col-sm-2">
+            <i class="fas fa-align-left"></i> @Localizer["Name"]
+        </dt>
+        <dd class="col-sm-10">
+            <p>@Html.DisplayFor(model => model.Name)</p>
+        </dd>
+        <dt class="col-sm-2">
+            <i class="fas fa-align-left"></i> @Localizer["Description"]
+        </dt>
+        <dd class="col-sm-10">
+            <p>@Html.DisplayFor(model => model.Description)</p>
+        </dd>
+        <dt class="col-sm-2">
+            <i class="fas fa-tags"></i> @Localizer["Tags"]
+        </dt>
+        <dd class="col-sm-10">
+            <p>@Html.DisplayFor(model => model.Tags)</p>
+        </dd>
+        <dt class="col-sm-2">
+            <i class="fas fa-plus-circle"></i> @Localizer["Additional Fields"] :
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.AdditionalFields))
+            {
+                <p>@Model.AdditionalFields</p>
+            }
+            else
+            {
+                <p>@Localizer["No additional fields"] <i class="fas fa-exclamation-circle"></i></p>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            <i class="fas fa-image"></i> @Localizer["Photo"]
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+            {
+                <p>
+                    <a href="@Model.PhotoUrl" target="_blank">@Localizer["Photo URL: Open Image"] <i class="fas fa-link"></i></a>
+                </p>
+                <img src="@Url.Content(Model.PhotoUrl)" alt="@Localizer["Item Photo"]" class="img-fluid" style="max-width: 250px; height: auto;" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/images/Item(Proj).png")" alt="@Localizer["Item Photo"]" class="img-fluid" style="max-width: 250px; height: auto;">
+            }
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @if (User.IsInRole(UserRoles.Admin) || User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.AuthorId)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">@Localizer["Edit"] <i class="fas fa-edit"></i></a>
+    }
+    <a asp-action="Index" class="btn btn-info">@Localizer["Back to List"] <i class="fas fa-arrow-left"></i></a>
+</div>
+
+<div>
+    <h4>@Localizer["Comments"] <i class="fas fa-comments"></i></h4>
+    <hr />
+    <div>
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="comment-box">
+                <p><strong>@(comment.UserName == null ? "Admin" : comment.UserName)</strong> (@comment.DateTime.ToString("g"))</p>
+                <p>@comment.Message</p>
+                @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.AuthorId || User.IsInRole(UserRoles.Admin))
+                {
+                    <form asp-action="DeleteComment" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@comment.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">@Localizer["Delete"] <i class="fas fa-trash-alt"></i></button>
+                    </form>
+                }
+            </div>
+        }
+    </div>
+    <form asp-action="AddComment" method="post" class="mt-3">
+        <input type="hidden" name="ItemId" value="@Model.Id" />
+        <input type="hidden" name="UserId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+        <input type="hidden" name="UserName" value="@(User.Identity.Name ?? "Admin")" />
+        <div class="form-group">
+            <textarea name="Message" class="form-control" rows="3" placeholder="Add a comment..." required></textarea>
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">@Localizer["Add Comment"]</button>
+    </form>
+
+</div>
+
+<div class="mt-4">
+    <h4>@Localizer["Likes"] <i class="fas fa-thumbs-up"></i></h4>
+    <hr />
+    <div class="like-buttons">
+        <span class="likebtn-wrapper" data-theme="drop" data-lang="ru" data-ef_voting="buzz" data-white_label="true" data-identifier="item_@Model.Id"></span>
+        <script>(function (d, e, s) { if (d.getElementById("likebtn_wjs")) return; a = d.createElement(e); m = d.getElementsByTagName(e)[0]; a.async = 1; a.id = "likebtn_wjs"; a.src = s; m.parentNode.insertBefore(a, m) })(document, "script", "//w.likebtn.com/js/w/widget.js");</script>
+    </div>
+</div>
+
+<style>
+    .comment-box {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .like-buttons button {
+        margin-right: 5px;
+    }
+
+    .badge-info {
+        background-color: #17a2b8;
+        color: white;
+        padding: 0.5em 0.75em;
+        font-size: 1em;
+        border-radius: 0.25rem;
+    }
+
+        .badge-info i {
+            margin-right: 0.25em;
+        }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

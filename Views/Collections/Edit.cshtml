@@ -1,0 +1,77 @@
+﻿@using CourseProjectItems.Models.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CourseProjectItems.ViewModels.CollectionViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["Edit Collection"];
+}
+
+<h2>@Localizer["Edit Collection"] <i class="fas fa-edit"></i></h2>
+
+<h4>@Localizer["Collection"] <i class="fas fa-folder-open"></i></h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">@Localizer["Name"] <i class="fas fa-font"></i></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">@Localizer["Description"] <i class="fas fa-align-left"></i></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label">@Localizer["Category"] <i class="fas fa-list-alt"></i></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label">@Localizer["Type"] <i class="fas fa-tags"></i></label>
+                <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<CollectionType>()"></select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="AuthorId" />
+            <div class="form-group">
+                <label asp-for="IconClass" class="control-label">@Localizer["Icon"] <i class="fas fa-icons"></i></label>
+                <select asp-for="IconClass" class="form-control">
+                    <option value="fas fa-book">Book</option>
+                    <option value="fas fa-music">Music</option>
+                    <option value="fas fa-film">Film</option>
+                    <option value="fas fa-camera">Camera</option>
+                    <option value="fas fa-gamepad">Gamepad</option>
+                    <option value="fas fa-car">Car</option>
+                    <option value="fas fa-tree">Tree</option>
+                    <option value="fas fa-paw">Animal</option>
+                    <option value="fas fa-plane">Plane</option>
+                    <option value="fas fa-umbrella">Umbrella</option>
+                    <option value="fas fa-bicycle">Bicycle</option>
+                    <option value="fas fa-apple-alt">Fruit</option>
+                    <option value="fas fa-coffee">Coffee</option>
+                    <option value="fas fa-laptop">Laptop</option>
+                    <option value="fas fa-mobile-alt">Mobile</option>
+                    <option value="fas fa-star">Star</option>
+                    <option value="fas fa-heart">Heart</option>
+                    <option value="fas fa-bolt">Lightning</option>
+                    <option value="fas fa-globe">Globe</option>
+                    <option value="fas fa-mountain">Mountain</option>
+                    <option value="fas fa-music">Music</option>
+                    <option value="fas fa-futbol">Football</option>
+                    <option value="fas fa-chess">Chess</option>
+                    <option value="fas fa-guitar">Guitar</option>
+                </select>
+                <span asp-validation-for="IconClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-secondary">@Localizer["Back to List"] <i class="fas fa-arrow-left"></i></a>
+</div>

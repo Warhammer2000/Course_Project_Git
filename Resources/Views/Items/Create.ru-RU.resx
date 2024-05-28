@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Create Item" xml:space="preserve">
+        <value>Создать элемент</value>
+    </data>
+	<data name="Name" xml:space="preserve">
+        <value>Название</value>
+    </data>
+	<data name="Description" xml:space="preserve">
+        <value>Описание</value>
+    </data>
+	<data name="Tags" xml:space="preserve">
+        <value>Теги</value>
+    </data>
+	<data name="Photo" xml:space="preserve">
+        <value>Фото</value>
+    </data>
+	<data name="Initial Comment" xml:space="preserve">
+        <value>Начальный комментарий</value>
+    </data>
+	<data name="Additional Fields" xml:space="preserve">
+        <value>Дополнительные поля</value>
+    </data>
+	<data name="Create" xml:space="preserve">
+        <value>Создать</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+	<data name="Enter additional fields" xml:space="preserve">
+        <value>Введите дополнительные поля</value>
+    </data>
+</root>

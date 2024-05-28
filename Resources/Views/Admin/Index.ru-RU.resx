@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Admin - Manage Users" xml:space="preserve">
+    <value>Администратор - Управление пользователями</value>
+  </data>
+	<data name="Manage Users" xml:space="preserve">
+    <value>Управление пользователями</value>
+  </data>
+	<data name="UserName" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+	<data name="Email" xml:space="preserve">
+    <value>Электронная почта</value>
+  </data>
+	<data name="Locked Out" xml:space="preserve">
+    <value>Заблокирован для входа</value>
+  </data>
+	<data name="Blocked" xml:space="preserve">
+    <value>Ограничен в действиях</value>
+  </data>
+	<data name="Admin" xml:space="preserve">
+    <value>Администратор</value>
+  </data>
+	<data name="Actions" xml:space="preserve">
+    <value>Действия</value>
+  </data>
+	<data name="Lock" xml:space="preserve">
+    <value>Заблокировать пользователя</value>
+  </data>
+	<data name="Unlock" xml:space="preserve">
+    <value>Разблокировать пользователя</value>
+  </data>
+	<data name="Block" xml:space="preserve">
+    <value>Ограничить пользователя</value>
+  </data>
+	<data name="Unblock" xml:space="preserve">
+    <value>Снять ограничения с пользователя</value>
+  </data>
+	<data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+	<data name="Add Admin" xml:space="preserve">
+    <value>Добавить администратора</value>
+  </data>
+	<data name="Remove Admin" xml:space="preserve">
+    <value>Удалить администратора</value>
+  </data>
+	<data name="The user's username" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+	<data name="The user's email address" xml:space="preserve">
+    <value>Электронная почта пользователя</value>
+  </data>
+	<data name="This function prevents the user from logging in at all" xml:space="preserve">
+    <value>Эта функция полностью предотвращает вход пользователя в систему</value>
+  </data>
+	<data name="This function restricts the user from creating, editing, and deleting collections and items, as well as deleting comments" xml:space="preserve">
+    <value>Эта функция запрещает пользователю создавать, редактировать и удалять коллекции и элементы, а также удалять комментарии</value>
+  </data>
+	<data name="This function allows the user to create, edit, and delete all collections and items, as well as delete, block, and assign other administrators" xml:space="preserve">
+    <value>Эта функция позволяет пользователю создавать, редактировать и удалять все коллекции и элементы, а также удалять, блокировать и назначать других администраторов</value>
+  </data>
+	<data name="Available actions for this user" xml:space="preserve">
+    <value>Доступные действия для этого пользователя</value>
+  </data>
+	<data name="SuccessMessage" xml:space="preserve">
+    <value>Успешное сообщение</value>
+  </data>
+	<data name="WarningMessage" xml:space="preserve">
+    <value>Предупреждение</value>
+  </data>
+	<data name="CheckCircle" xml:space="preserve">
+    <value>fas fa-check-circle</value>
+  </data>
+	<data name="ExclamationCircle" xml:space="preserve">
+    <value>fas fa-exclamation-circle</value>
+  </data>
+	<data name="SuccessMessage" xml:space="preserve">
+    <value>Успешное сообщение</value>
+  </data>
+	<data name="WarningMessage" xml:space="preserve">
+    <value>Предупреждающее сообщение</value>
+  </data>
+	<data name="User has been deleted." xml:space="preserve">
+    <value>Пользователь был удален.</value>
+  </data>
+	<data name="User not found." xml:space="preserve">
+    <value>Пользователь не найден.</value>
+  </data>
+	<data name="User {0} has been blocked." xml:space="preserve">
+    <value>Пользователь {0} был заблокирован.</value>
+  </data>
+	<data name="User {0} has been locked." xml:space="preserve">
+    <value>Пользователь {0} был заблокирован.</value>
+  </data>
+	<data name="User {0} has been unblocked." xml:space="preserve">
+    <value>Пользователь {0} был разблокирован.</value>
+  </data>
+	<data name="User {0} has been unlocked." xml:space="preserve">
+    <value>Пользователь {0} был разблокирован.</value>
+  </data>
+	<data name="User has been added to Admins." xml:space="preserve">
+    <value>Пользователь был добавлен к администраторам.</value>
+  </data>
+	<data name="User not found or already an Admin." xml:space="preserve">
+    <value>Пользователь не найден или уже является администратором.</value>
+  </data>
+	<data name="User has been removed from Admins." xml:space="preserve">
+    <value>Пользователь был удален из администраторов.</value>
+  </data>
+</root>

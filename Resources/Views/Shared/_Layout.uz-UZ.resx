@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="My ASP.NET Application" xml:space="preserve">
+        <value>Mening ASP.NET ilovam</value>
+    </data>
+	<data name="Home" xml:space="preserve">
+        <value>Bosh sahifa</value>
+    </data>
+	<data name="Privacy" xml:space="preserve">
+        <value>Maxfiylik</value>
+    </data>
+	<data name="My Account" xml:space="preserve">
+        <value>Mening hisobim</value>
+    </data>
+	<data name="Logout" xml:space="preserve">
+        <value>Chiqish</value>
+    </data>
+	<data name="Login" xml:space="preserve">
+        <value>Kirish</value>
+    </data>
+	<data name="Register" xml:space="preserve">
+        <value>Ro'yxatdan o'tish</value>
+    </data>
+</root>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Privacy Policy" xml:space="preserve">
+        <value>Политика конфиденциальности</value>
+    </data>
+	<data name="Use this page to detail your site's privacy policy." xml:space="preserve">
+        <value>Используйте эту страницу для описания политики конфиденциальности вашего сайта.</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+</root>

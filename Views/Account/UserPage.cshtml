@@ -1,0 +1,85 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@model CourseProjectItems.ViewModels.UserPageViewModel
+
+@{
+    ViewData["Title"] = Localizer["User Page"];
+}
+
+<h2>@ViewData["Title"] <i class="fas fa-user"></i></h2>
+
+<div>
+    <h3>@Localizer["User Information"] <i class="fas fa-info-circle"></i></h3>
+    <p><strong>@Localizer["User Name:"]</strong> @Model.UserName</p>
+    <p><strong>@Localizer["Email:"]</strong> @Model.Email</p>
+</div>
+
+<div>
+    <h3>@Localizer["Collections"] <i class="fas fa-th-large"></i></h3>
+    <a asp-action="Create" asp-controller="Collections" class="btn btn-primary">@Localizer["Add New Collection"] <i class="fas fa-plus"></i></a>
+    @if (Model.Collections != null && Model.Collections.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Collections.First().Name) <i class="fas fa-tag"></i></th>
+                    <th>@Html.DisplayNameFor(model => model.Collections.First().Type) <i class="fas fa-clipboard-list"></i></th>
+                    <th>@Html.DisplayNameFor(model => model.Collections.First().Description) <i class="fas fa-align-left"></i></th>
+                    <th>@Localizer["Actions"] <i class="fas fa-cogs"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var collection in Model.Collections)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => collection.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => collection.Type)</td>
+                        <td>@Html.DisplayFor(modelItem => collection.Description)</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Collections" asp-route-id="@collection.Id" class="btn btn-sm btn-info">@Localizer["Details"] <i class="fas fa-eye"></i></a>
+                            <a asp-action="Edit" asp-controller="Collections" asp-route-id="@collection.Id" class="btn btn-sm btn-warning">@Localizer["Edit"] <i class="fas fa-edit"></i></a>
+                            <a asp-action="Delete" asp-controller="Collections" asp-route-id="@collection.Id" class="btn btn-sm btn-danger">@Localizer["Delete"] <i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>@Localizer["No collections available."]</p>
+    }
+</div>
+
+<div>
+    <h3>@Localizer["Pagination"] <i class="fas fa-pager"></i></h3>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @if (Model.PageViewModel.PageNumber > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="UserPage" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">@Localizer["Previous"] <i class="fas fa-chevron-left"></i></a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.PageViewModel.TotalItems / Model.PageViewModel.PageSize + 1; i++)
+                {
+                    <li class="page-item @(i == Model.PageViewModel.PageNumber ? "active" : "")">
+                        <a class="page-link" asp-action="UserPage" asp-route-page="@i">@i</a>
+                    </li>
+                }
+                @if (Model.PageViewModel.PageNumber < Model.PageViewModel.TotalItems / Model.PageViewModel.PageSize + 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="UserPage" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">@Localizer["Next"] <i class="fas fa-chevron-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,153 @@
+﻿@model IEnumerable<CourseProjectItems.ViewModels.UserViewModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+<h1>@Localizer["Manage Users"] <i class="fas fa-users-cog"></i></h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["WarningMessage"] != null)
+{
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-circle"></i> @TempData["WarningMessage"]
+    </div>
+}
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <button type="button" class="btn btn-link p-0" data-toggle="popover" data-content="@Localizer["The user's username"]">
+                    @Localizer["UserName"] <i class="fas fa-user"></i>
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link p-0" data-toggle="popover" data-content="@Localizer["The user's email address"]">
+                    @Localizer["Email"] <i class="fas fa-envelope"></i>
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link p-0" data-toggle="popover" data-content="@Localizer["This function prevents the user from logging in at all"]">
+                    @Localizer["Locked Out"] <i class="fas fa-lock"></i>
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link p-0" data-toggle="popover" data-content="@Localizer["This function restricts the user from creating, editing, and deleting collections and items, as well as deleting comments"]">
+                    @Localizer["Blocked"] <i class="fas fa-ban"></i>
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link p-0" data-toggle="popover" data-content="@Localizer["This function allows the user to create, edit, and delete all collections and items, as well as delete, block, and assign other administrators"]">
+                    @Localizer["Admin"] <i class="fas fa-user-shield"></i>
+                </button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-link p-0" data-toggle="popover" data-content="@Localizer["Available actions for this user"]">
+                    @Localizer["Actions"] <i class="fas fa-cogs"></i>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.IsLockedOut</td>
+                <td>@(user.IsBlocked)</td>
+                <td>@(user.IsAdmin)</td>
+                <td>
+                    <div class="d-flex flex-wrap">
+                        <form asp-action="LockUser" method="post" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-warning btn-sm m-1" @(user.IsLockedOut ? "disabled" : "")>
+                                <i class="fas fa-lock"></i> @Localizer["Lock"]
+                            </button>
+                        </form>
+                        <form asp-action="UnlockUser" method="post" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-success btn-sm m-1" @(!user.IsLockedOut ? "disabled" : "")>
+                                <i class="fas fa-unlock"></i> @Localizer["Unlock"]
+                            </button>
+                        </form>
+                        <form asp-action="BlockUser" method="post" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-warning btn-sm m-1" @(user.IsBlocked ? "disabled" : "")>
+                                <i class="fas fa-ban"></i> @Localizer["Block"]
+                            </button>
+                        </form>
+                        <form asp-action="UnblockUser" method="post" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-success btn-sm m-1" @(!user.IsBlocked ? "disabled" : "")>
+                                <i class="fas fa-check"></i> @Localizer["Unblock"]
+                            </button>
+                        </form>
+                        <form asp-action="DeleteUser" method="post" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm m-1">
+                                <i class="fas fa-trash-alt"></i> @Localizer["Delete"]
+                            </button>
+                        </form>
+                        @if (user.IsAdmin)
+                        {
+                            <form asp-action="RemoveAdmin" method="post" style="display:inline;">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button type="submit" class="btn btn-secondary btn-sm m-1">
+                                    <i class="fas fa-user-minus"></i> @Localizer["Remove Admin"]
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="AddAdmin" method="post" style="display:inline;">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button type="submit" class="btn btn-primary btn-sm m-1">
+                                    <i class="fas fa-user-plus"></i> @Localizer["Add Admin"]
+                                </button>
+                            </form>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .btn-sm {
+        margin-right: 5px;
+    }
+
+    .alert {
+        margin-top: 20px;
+    }
+
+    .table td i {
+        margin-left: 5px;
+    }
+
+    .popover {
+        max-width: 300px;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover({
+                trigger: 'hover',
+                placement: 'top',
+                html: true
+            });
+        });
+    </script>
+}

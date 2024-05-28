@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Collections" xml:space="preserve">
+        <value>Коллекции</value>
+    </data>
+	<data name="Create New" xml:space="preserve">
+        <value>Создать новую</value>
+    </data>
+	<data name="Name" xml:space="preserve">
+        <value>Название</value>
+    </data>
+	<data name="Category" xml:space="preserve">
+        <value>Категория</value>
+    </data>
+	<data name="Type" xml:space="preserve">
+        <value>Тип</value>
+    </data>
+	<data name="Description" xml:space="preserve">
+        <value>Описание</value>
+    </data>
+	<data name="Actions" xml:space="preserve">
+        <value>Действия</value>
+    </data>
+	<data name="Edit" xml:space="preserve">
+        <value>Редактировать</value>
+    </data>
+	<data name="Details" xml:space="preserve">
+        <value>Детали</value>
+    </data>
+	<data name="Delete" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+	<data name="No collections found." xml:space="preserve">
+        <value>Коллекции не найдены.</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+	<data name="Icon" xml:space="preserve">
+        <value>Иконка</value>
+    </data>
+	<data name="Created by" xml:space="preserve">
+        <value>Был создан</value>
+    </data>
+</root>

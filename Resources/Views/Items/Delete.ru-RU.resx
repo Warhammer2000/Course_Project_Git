@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Delete Item" xml:space="preserve">
+        <value>Удалить элемент</value>
+    </data>
+	<data name="Are you sure you want to delete this?" xml:space="preserve">
+        <value>Вы уверены, что хотите удалить это?</value>
+    </data>
+	<data name="Name" xml:space="preserve">
+        <value>Название</value>
+    </data>
+	<data name="CollectionId" xml:space="preserve">
+        <value>Идентификатор коллекции</value>
+    </data>
+	<data name="Delete" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+	<data name="Back to List" xml:space="preserve">
+        <value>Назад к списку</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+	<data name="Item" xml:space="preserve">
+        <value>Элемент</value>
+    </data>
+</root>

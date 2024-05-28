@@ -1,0 +1,63 @@
+﻿@model CourseProjectItems.ViewModels.ItemViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["Create Item"];
+}
+
+<h2>@Localizer["Create Item"] <i class="fas fa-plus-circle"></i></h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="CollectionId" />
+    <input type="hidden" asp-for="CollectionName" />
+    <input type="hidden" asp-for="AuthorId" />
+    <input type="hidden" asp-for="Comments[0].UserName" />
+    <input type="hidden" asp-for="Comments[0].UserId" />
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">@Localizer["Name"] <i class="fas fa-font"></i></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">@Localizer["Description"] <i class="fas fa-align-left"></i></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tags" class="control-label">@Localizer["Tags"] <i class="fas fa-tags"></i></label>
+        <input asp-for="Tags" class="form-control" />
+        <span asp-validation-for="Tags" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Photo" class="control-label">@Localizer["Photo"] <i class="fas fa-image"></i></label>
+        <input asp-for="Photo" class="form-control" type="file" />
+        <span asp-validation-for="Photo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments[0].Message" class="control-label">@Localizer["Initial Comment"] <i class="fas fa-comment"></i></label>
+        <textarea asp-for="Comments[0].Message" class="form-control"></textarea>
+        <span asp-validation-for="Comments[0].Message" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div id="additionalFields">
+            @if (!string.IsNullOrEmpty(Model.AdditionalFields))
+            {
+                <div class="form-group">
+                    <input name="AdditionalFields" value="@Model.AdditionalFields" class="form-control" />
+                </div>
+            }
+        </div>
+        <label asp-for="AdditionalFields" class="control-label">@Localizer["Additional Fields"] <i class="fas fa-plus"></i></label>
+        <textarea asp-for="AdditionalFields" class="form-control" placeholder='@Localizer["Enter additional fields"]'></textarea>
+        <span asp-validation-for="AdditionalFields" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="margin-top: 1cm;">
+        <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Create Collection" xml:space="preserve">
+        <value>Создать коллекцию</value>
+    </data>
+	<data name="Name" xml:space="preserve">
+        <value>Название</value>
+    </data>
+	<data name="Description" xml:space="preserve">
+        <value>Описание</value>
+    </data>
+	<data name="Category" xml:space="preserve">
+        <value>Категория</value>
+    </data>
+	<data name="Type" xml:space="preserve">
+        <value>Тип</value>
+    </data>
+	<data name="Create" xml:space="preserve">
+        <value>Создать</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+	<data name="Icon" xml:space="preserve">
+        <value>Иконка</value>
+    </data>
+</root>

@@ -1,0 +1,25 @@
+﻿:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --link-color: #007bff;
+    --nav-background-color: #f8f9fa;
+    --nav-text-color: #000000;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--link-color);
+}
+
+.navbar {
+    background-color: var(--nav-background-color);
+    color: var(--nav-text-color);
+}
+
+.nav-link {
+    color: var(--nav-text-color);
+}

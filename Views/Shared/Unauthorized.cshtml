@@ -1,0 +1,37 @@
+﻿@model string
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Localizer["Unauthorized"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: var(--background-color, #f8f9fa);
+            color: var(--text-color, #343a40);
+        }
+
+        .container {
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        .error-icon {
+            font-size: 5rem;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <i class="fas fa-user-lock error-icon"></i>
+        <h1 class="display-4">@Localizer["Unauthorized"]</h1>
+        <p class="lead">@Localizer[@Model]</p>
+        <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> @Localizer["Go to Home"]</a>
+    </div>
+</body>
+</html>

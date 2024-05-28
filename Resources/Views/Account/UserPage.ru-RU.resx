@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="User Page" xml:space="preserve">
+        <value>Страница пользователя</value>
+    </data>
+	<data name="User Information" xml:space="preserve">
+        <value>Информация о пользователе</value>
+    </data>
+	<data name="User Name:" xml:space="preserve">
+        <value>Имя пользователя:</value>
+    </data>
+	<data name="Phone Number:" xml:space="preserve">
+        <value>Номер телефона:</value>
+    </data>
+	<data name="Collections" xml:space="preserve">
+        <value>Коллекции</value>
+    </data>
+	<data name="Add New Collection" xml:space="preserve">
+        <value>Добавить новую коллекцию</value>
+    </data>
+	<data name="No collections available." xml:space="preserve">
+        <value>Нет доступных коллекций.</value>
+    </data>
+	<data name="Pagination" xml:space="preserve">
+        <value>Пагинация</value>
+    </data>
+	<data name="Previous" xml:space="preserve">
+        <value>Предыдущий</value>
+    </data>
+	<data name="Next" xml:space="preserve">
+        <value>Следующий</value>
+    </data>
+	<data name="Actions" xml:space="preserve">
+        <value>Действия</value>
+    </data>
+	<data name="Edit" xml:space="preserve">
+        <value>Редактировать</value>
+    </data>
+	<data name="Delete" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+	<data name="Email:" xml:space="preserve">
+        <value>Электронная почта</value>
+    </data>
+	<data name="Details" xml:space="preserve">
+    <value>Подробнее</value>
+  </data>
+</root>

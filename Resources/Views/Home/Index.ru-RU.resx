@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Home Page" xml:space="preserve">
+    <value>Домашняя страница</value>
+  </data>
+	<data name="Search Results" xml:space="preserve">
+    <value>Результаты поиска</value>
+  </data>
+	<data name="Search..." xml:space="preserve">
+    <value>Поиск...</value>
+  </data>
+	<data name="Search" xml:space="preserve">
+    <value>Искать</value>
+  </data>
+	<data name="Items" xml:space="preserve">
+    <value>Элементы</value>
+  </data>
+	<data name="Details" xml:space="preserve">
+    <value>Подробнее</value>
+  </data>
+	<data name="Collections" xml:space="preserve">
+    <value>Коллекции</value>
+  </data>
+	<data name="No results found." xml:space="preserve">
+    <value>Результаты не найдены.</value>
+  </data>
+	<data name="All Collections" xml:space="preserve">
+    <value>Все коллекции</value>
+  </data>
+	<data name="View Items" xml:space="preserve">
+    <value>Посмотреть элементы</value>
+  </data>
+	<data name="No collections found." xml:space="preserve">
+    <value>Коллекции не найдены.</value>
+  </data>
+	<data name="Current Language:" xml:space="preserve">
+    <value>Текущий язык:</value>
+  </data>
+</root>

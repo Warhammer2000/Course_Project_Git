@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Register" xml:space="preserve">
+        <value>Регистрация</value>
+    </data>
+	<data name="Create a new account." xml:space="preserve">
+        <value>Создайте новую учетную запись.</value>
+    </data>
+	<data name="Email" xml:space="preserve">
+        <value>Эл. почта</value>
+    </data>
+	<data name="User Name" xml:space="preserve">
+        <value>Имя пользователя</value>
+    </data>
+	<data name="Password" xml:space="preserve">
+        <value>Пароль</value>
+    </data>
+	<data name="Confirm Password" xml:space="preserve">
+        <value>Подтвердите пароль</value>
+    </data>
+	<data name="Already have an account? Log in" xml:space="preserve">
+        <value>Уже есть аккаунт? Войти</value>
+    </data>
+	<data name="Back to Home" xml:space="preserve">
+        <value>Назад на главную</value>
+    </data>
+	<data name="Current Language:" xml:space="preserve">
+        <value>Текущий язык:</value>
+    </data>
+</root>

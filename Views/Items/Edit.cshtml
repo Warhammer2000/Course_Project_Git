@@ -1,0 +1,77 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@model CourseProjectItems.ViewModels.ItemViewModel
+
+@{
+    ViewData["Title"] = Localizer["Edit Item"];
+}
+
+<h1>@Localizer["Edit Item"] <i class="fas fa-edit"></i></h1>
+
+<h4>@Localizer["Item"] <i class="fas fa-box"></i></h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" />
+                <label asp-for="Name" class="control-label">@Localizer["Name"] <i class="fas fa-font"></i></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">@Localizer["Description"] <i class="fas fa-align-left"></i></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label">@Localizer["Tags"] <i class="fas fa-tags"></i></label>
+                <input asp-for="Tags" class="form-control" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label">@Localizer["Photo"] <i class="fas fa-image"></i></label>
+                <input asp-for="Photo" class="form-control" type="file" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>@Localizer["Additional Fields"] <i class="fas fa-plus-circle"></i></label>
+                <div id="additionalFieldsContainer">
+                    @if (!string.IsNullOrEmpty(Model.AdditionalFields))
+                    {
+                        @foreach (var field in Model.AdditionalFields.Split(';'))
+                        {
+                            <div class="form-group">
+                                <input type="text" name="AdditionalFields" value="@field" class="form-control" />
+                            </div>
+                        }
+                    }
+                </div>
+                <button type="button" id="addFieldButton" class="btn btn-primary" style="margin-top: 1cm;">@Localizer["Add Field"] <i class="fas fa-plus"></i></button>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('addFieldButton').addEventListener('click', function () {
+            var newFieldContainer = document.createElement('div');
+            newFieldContainer.classList.add('form-group');
+
+            var newFieldInput = document.createElement('input');
+            newFieldInput.type = 'text';
+            newFieldInput.name = 'AdditionalFields';
+            newFieldInput.classList.add('form-control');
+
+            newFieldContainer.appendChild(newFieldInput);
+            document.getElementById('additionalFieldsContainer').appendChild(newFieldContainer);
+        });
+    </script>
+}
