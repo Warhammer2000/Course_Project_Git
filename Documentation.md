@@ -132,18 +132,168 @@
 - **Форматирование**: Используйте стандартные отступы и форматирование кода, принятые в C#.
 - **Комментарии**: Документируйте все публичные методы и классы.
 
-### Описание Классов и Методов
+## Описание Классов и Методов
 
-- AdminController.cs
+## Controller :
 
-  :
+- - **AccountController.cs:**
 
-  - `Index()`: Возвращает список всех пользователей.
-  - `LockUser(string userId)`: Блокирует пользователя.
-  - `UnlockUser(string userId)`: Разблокирует пользователя.
-  - `DeleteUser(string userId)`: Удаляет пользователя.
-  - `AddAdmin(string userId)`: Назначает пользователя администратором.
-  - `RemoveAdmin(string userId)`: Снимает права администратора с пользователя.
+    - `Login(string returnUrl = null)`: Отображает страницу входа.
+    - `Login(LoginViewModel loginViewModel, string returnUrl = null)`: Обрабатывает вход пользователя.
+    - `Register()`: Отображает страницу регистрации.
+    - `Register(RegisterViewModel registerViewModel)`: Обрабатывает регистрацию нового пользователя.
+    - `Logout()`: Выполняет выход пользователя.
+    - `UserPage(CollectionType? type, string id, string name = "default", int page = 1, SortState sortOrder = SortState.NameAsc)`: Отображает страницу пользователя с фильтрацией и сортировкой коллекций.
+    - `RegisterConfirmation(string email)`: Отображает подтверждение регистрации.
+    - `ConfirmEmail(string userId, string code)`: Подтверждает электронную почту пользователя.
+  
+    **AdminController.cs:**
+  
+    - `Index()`: Возвращает список всех пользователей.
+    - `DeleteUser(string userId)`: Удаляет пользователя.
+    - `BlockUser(string userId)`: Блокирует пользователя.
+    - `LockUser(string userId)`: Блокирует пользователя на определенный период.
+    - `UnblockUser(string userId)`: Разблокирует пользователя.
+    - `UnlockUser(string userId)`: Снимает блокировку с пользователя.
+    - `AddAdmin(string userId)`: Назначает пользователя администратором.
+    - `RemoveAdmin(string userId)`: Снимает права администратора с пользователя.
+  
+    **CollectionsController.cs:**
+  
+    - `Index()`: Отображает список всех коллекций.
+    - `Details(int id)`: Отображает детали конкретной коллекции.
+    - `Create()`: Отображает форму создания коллекции.
+    - `CreateItem(int collectionId)`: Перенаправляет на страницу создания элемента.
+    - `Create(CollectionViewModel viewModel)`: Создает новую коллекцию.
+    - `Edit(int id)`: Отображает форму редактирования коллекции.
+    - `Edit(int id, CollectionViewModel viewModel)`: Обновляет данные коллекции.
+    - `Delete(int id)`: Отображает форму удаления коллекции.
+    - `DeleteConfirmed(int id)`: Удаляет коллекцию и связанные элементы.
+    - `ExportToCsv(int id)`: Экспортирует данные коллекции в CSV-файл.
+  
+    **CommentsController.cs:**
+  
+    - `AddComment(Comment comment)`: Добавляет новый комментарий.
+    - `DeleteComment(int id)`: Удаляет комментарий.
+  
+    **HomeController.cs:**
+  
+    - `Index(string searchString)`: Отображает главную страницу с возможностью поиска.
+    - `SetLanguage(string culture, string returnUrl)`: Устанавливает язык интерфейса.
+    - `Privacy()`: Отображает страницу политики конфиденциальности.
+    - `Error()`: Обрабатывает ошибки и отображает страницу ошибки.
+  
+    **ItemsController.cs:**
+  
+    - `Index()`: Отображает список всех элементов.
+    - `Details(int id)`: Отображает детали конкретного элемента.
+    - `Create(int collectionId)`: Отображает форму создания элемента.
+    - `Create(ItemViewModel viewModel)`: Создает новый элемент.
+    - `Edit(int id)`: Отображает форму редактирования элемента.
+    - `Edit(int id, ItemViewModel viewModel)`: Обновляет данные элемента.
+    - `Delete(int id)`: Отображает форму удаления элемента.
+    - `DeleteConfirmed(int id)`: Удаляет элемент и связанные данные.
+    - `AddComment(int itemId, CommentViewModel commentViewModel)`: Добавляет новый комментарий к элементу.
+    - `DeleteComment(int id)`: Удаляет комментарий к элементу.
+  
+    **LikesController.cs:**
+  
+    - `Like(int itemId)`: Добавляет лайк к элементу.
+    - `Unlike(int itemId)`: Удаляет лайк с элемента.
+  
+    **PhotosController.cs:**
+  
+    - `UploadPhoto(IFormFile file)`: Загружает фото.
+    - `DeletePhoto(string publicId)`: Удаляет фото.
+  
+    ## Interfaces
+  
+    **IPhotoService.cs:**
+  
+    - `Task<ImageUploadResult> AddPhotoAsync(IFormFile file)`: Добавляет фото.
+    - `Task<DeletionResult> DeletePhotoAsync(string publicUrl)`: Удаляет фото.
+  
+    **ICollectionItem.cs:**
+  
+    - `string Name { get; set; }`: Имя элемента коллекции.
+    - `CollectionType Type { get; set; }`: Тип коллекции.
+  
+    **ICollectionRepository.cs:**
+  
+    - `Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId)`: Получить коллекции по ID пользователя.
+  
+    **ICollectionService.cs:**
+  
+    - `Task<IEnumerable<Collection>> GetAllCollections()`: Получить все коллекции.
+    - `Task<Collection> GetCollectionById(int id)`: Получить коллекцию по ID.
+    - `Task AddCollection(Collection collection)`: Добавить коллекцию.
+    - `Task UpdateCollection(Collection collection)`: Обновить коллекцию.
+    - `Task DeleteCollection(int id)`: Удалить коллекцию.
+    - `Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId)`: Получить коллекции по ID пользователя.
+  
+    **ICommentRepository.cs:**
+  
+    - `Task<IEnumerable<Comment>> GetCommentsByItemId(int itemId)`: Получить комментарии по ID элемента.
+  
+    **IEmailSender.cs:**
+  
+    - `Task SendEmailAsync(string email, string subject, string message)`: Отправить электронное письмо.
+  
+    **IGenericRepository.cs:**
+  
+    - `Task<IEnumerable<T>> GetAll()`: Получить все записи.
+    - `Task<T> GetById(int id)`: Получить запись по ID.
+    - `Task Add(T entity)`: Добавить запись.
+    - `Task Update(T entity)`: Обновить запись.
+    - `Task Delete(int id)`: Удалить запись.
+    - `IQueryable<T> Find(Expression<Func<T, bool>> expression)`: Найти записи по выражению.
+  
+    **ILikeRepository.cs:**
+  
+    - `Task<bool> IsLikedByUser(int itemId, string userId)`: Проверить, поставил ли пользователь лайк элементу.
+  
+    ## Services
+  
+    **CollectionService.cs:**
+  
+    - `Task<IEnumerable<Collection>> GetAllCollections()`: Получить все коллекции.
+    - `Task<Collection> GetCollectionById(int id)`: Получить коллекцию по ID.
+    - `Task AddCollection(Collection collection)`: Добавить коллекцию.
+    - `Task UpdateCollection(Collection collection)`: Обновить коллекцию.
+    - `Task DeleteCollection(int id)`: Удалить коллекцию.
+    - `Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId)`: Получить коллекции по ID пользователя.
+  
+    **PhotoService.cs:**
+  
+    - `Task<ImageUploadResult> AddPhotoAsync(IFormFile file)`: Добавляет фото.
+    - `Task<DeletionResult> DeletePhotoAsync(string publicUrl)`: Удаляет фото.
+  
+    **EmailSender.cs:**
+  
+    - `Task SendEmailAsync(string email, string subject, string message)`: Отправляет электронное письмо.
+  
+    ## Repository
+  
+    **LikeRepository.cs:**
+  
+    - `Task<bool> IsLikedByUser(int itemId, string userId)`: Проверить, поставил ли пользователь лайк элементу.
+  
+    **CollectionRepository.cs:**
+  
+    - `Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId)`: Получить коллекции по ID пользователя.
+  
+    **CommentRepository.cs:**
+  
+    - `Task<IEnumerable<Comment>> GetCommentsByItemId(int itemId)`: Получить комментарии по ID элемента.
+  
+    **GenericRepository.cs:**
+  
+    - `Task<IEnumerable<T>> GetAll()`: Получить все записи.
+    - `Task<T> GetById(int id)`: Получить запись по ID.
+    - `Task Add(T entity)`: Добавить запись.
+    - `Task Update(T entity)`: Обновить запись.
+    - `Task Delete(int id)`: Удалить запись.
+    - `IQueryable<T> Find(Expression<Func<T, bool>> expression)`: Найти записи по выражению.
 
 ## 5. Базы данных
 
@@ -190,8 +340,6 @@
 - Для запуска тестов используйте команду:
 
   ```
-  bash
-  Копировать код
   dotnet test
   ```
 
@@ -205,11 +353,11 @@
 
 ### Среда Развертывания
 
-- **Azure**, **AWS**, **Heroku**
+- **Azure**
 
 ### CI/CD
 
-- Настройте автоматическое развёртывание с использованием **GitHub Actions** или **Jenkins**.
+- Настройте автоматическое развёртывание с использованием  **Jenkins**.
 
 ## 8. Поддержка и сопровождение
 
@@ -255,4 +403,4 @@
 
 ------
 
-✨ Спасибо за использование CourseProjectItems! Мы надеемся, что вам понравится наше приложение. ✨
+✨ Спасибо за использование CourseProjectItems! Я надеюсь, что вам понравится моё приложение. ✨
