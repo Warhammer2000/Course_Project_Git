@@ -39,27 +39,27 @@
 
   **Диаграмма активности:** 
 
-  [Img]: https://drive.google.com/file/d/16SIe39NC4RtdHBIXZaKHNiwtExaDOx19/view?usp=drive_link
+  https://drive.google.com/uc?export=view&id=16SIe39NC4RtdHBIXZaKHNiwtExaDOx19	
 
   **Диаграмма развертывания:**
 
-  [Img]: https://drive.google.com/file/d/10LK96P6mKmYdChQJ_zzoKfJKVrj7z-LQ/view?usp=sharing
+  https://drive.google.com/uc?export=view&id=10LK96P6mKmYdChQJ_zzoKfJKVrj7z-LQ
 
   **Диаграмма последовательностей:**
   
-  [Img]: https://drive.google.com/file/d/1BCQEMb4IJzEBVc3wigzZ31GXyXRlyNCA/view?usp=drive_link
+  https://drive.google.com/uc?export=view&id=1BCQEMb4IJzEBVc3wigzZ31GXyXRlyNCA
   
   **Диаграмма компонентов:**
   
-  [Img]: https://drive.google.com/file/d/1E93rQhsZkLysX9UrQsKaM5mioGEe0od0/view?usp=drive_link
+  https://drive.google.com/uc?export=view&id=1E93rQhsZkLysX9UrQsKaM5mioGEe0od0
   
   **Диаграмма классов:**
   
-  [Img]: https://drive.google.com/file/d/1U3t6iCaPrfMZPazKhTuouKFnUk4yXnvb/view?usp=drive_link
+  https://drive.google.com/uc?export=view&id=1U3t6iCaPrfMZPazKhTuouKFnUk4yXnvb
   
   Ссылка на папку с UML Диаграммами : 
   
-  [UML DIAGRAMS]: https://drive.google.com/drive/folders/1jhvONmUsNeh0DSpSKJU_aHmEg_S9F2vH?usp=sharing
+  https://drive.google.com/drive/folders/1jhvONmUsNeh0DSpSKJU_aHmEg_S9F2vH?usp=sharing
   
   
 
