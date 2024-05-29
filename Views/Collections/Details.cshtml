@@ -94,6 +94,7 @@
 	{
 		<a asp-action="CreateItem" asp-route-collectionId="@Model.Id" class="btn btn-primary">@Localizer["Add New Item"] <i class="fas fa-plus"></i></a>
 		<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">@Localizer["Edit"] <i class="fas fa-edit"></i></a>
+		<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">@Localizer["Delete"]<i class="fas fa-delete-left"></i></a>
 	}
 	<a asp-action="Index" class="btn btn-secondary">@Localizer["Back to List"] <i class="fas fa-arrow-left"></i></a>
 	<a asp-action="ExportToCsv" asp-route-id="@Model.Id" class="btn btn-primary btn-sm m-1">

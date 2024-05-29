@@ -87,12 +87,38 @@
                                 <i class="fas fa-check"></i> @Localizer["Unblock"]
                             </button>
                         </form>
-                        <form asp-action="DeleteUser" method="post" style="display:inline;">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <button type="submit" class="btn btn-danger btn-sm m-1">
-                                <i class="fas fa-trash-alt"></i> @Localizer["Delete"]
-                            </button>
-                        </form>
+                        <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteUserModal-@user.Id">
+                            <i class="fas fa-trash-alt"></i> @Localizer["Delete"]
+                        </button>
+                        <div class="modal fade" id="deleteUserModal-@user.Id" tabindex="-1" aria-labelledby="deleteUserModalLabel-@user.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteUserModalLabel-@user.Id">@Localizer["Delete User"]</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>@Localizer["Are you sure you want to delete this user?"]</p>
+                                        <p>@Localizer["Delete collections and items created by this user?"]</p>
+                                        <form asp-action="DeleteUser" method="post" id="deleteUserForm-@user.Id">
+                                            <input type="hidden" name="userId" value="@user.Id" />
+                                            <input type="hidden" name="deleteCollectionsAndItems" id="deleteCollectionsAndItemsHidden-@user.Id" value="false" />
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="deleteCollectionsAndItemsCheckbox-@user.Id">
+                                                <label class="form-check-label" for="deleteCollectionsAndItemsCheckbox-@user.Id">
+                                                    @Localizer["Yes, delete collections and items"]
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                                                <button type="submit" class="btn btn-danger" onclick="setDeleteCollectionsAndItemsValue('@user.Id')">@Localizer["Delete"]</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         @if (user.IsAdmin)
                         {
                             <form asp-action="RemoveAdmin" method="post" style="display:inline;">
@@ -141,6 +167,8 @@
 </style>
 
 @section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
             $('[data-toggle="popover"]').popover({
@@ -149,5 +177,16 @@
                 html: true
             });
         });
+    </script>
+    <script>
+        function setDeleteCollectionsAndItemsValue(userId) {
+            var checkbox = document.getElementById('deleteCollectionsAndItemsCheckbox-' + userId);
+            var hiddenField = document.getElementById('deleteCollectionsAndItemsHidden-' + userId);
+            if (checkbox.checked) {
+                hiddenField.value = "true";
+            } else {
+                hiddenField.value = "false";
+            }
+        }
     </script>
 }

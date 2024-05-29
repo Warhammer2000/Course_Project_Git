@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 
 namespace CourseProjectItems.Controllers
 {
@@ -15,16 +16,15 @@ namespace CourseProjectItems.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHtmlLocalizer<AdminController> _localizer;
-        private readonly ILogger<AdminController> _logger;
-        public AdminController(UserManager<ApplicationUser> userManager, 
-            RoleManager<IdentityRole> roleManager, IHtmlLocalizer<AdminController> localizer, ILogger<AdminController> logger)
+        private readonly ApplicationDbContext _context;
+        public AdminController(UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager, IHtmlLocalizer<AdminController> localizer
+        , ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _localizer = localizer;
-            _logger = logger;
-
-            _logger.LogInformation("AdminController initialized with _localizer: {LocalizerExists}", _localizer != null);
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -43,14 +43,18 @@ namespace CourseProjectItems.Controllers
             return View(userViewModels);
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string userId)
+        public async Task<IActionResult> DeleteUser(string userId, bool deleteCollectionsAndItems)
         {
             if (userId == null) return View("NotFound", "User not found.");
-
+            if (deleteCollectionsAndItems == false) return View("NotFound", "VOt takie dela");
             var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                await _userManager.DeleteAsync(user);
+                if (deleteCollectionsAndItems)
+                {
+                    await DeleteUserCollectionsAndItems(user.Id);
+                }
+                    await _userManager.DeleteAsync(user);
                 TempData["SuccessMessage"] = _localizer["User has been deleted."].Value;
             }
             else
@@ -73,7 +77,7 @@ namespace CourseProjectItems.Controllers
                 await _userManager.UpdateAsync(user);
                 TempData["WarningMessage"] = _localizer["User {0} has been blocked.", user.UserName].Value;
             }
-          
+
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
@@ -164,6 +168,29 @@ namespace CourseProjectItems.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+        private async Task DeleteUserCollectionsAndItems(string userId)
+        {
+            var collections = await _context.Collections
+                   .Where(c => c.AuthorID == userId)
+                   .Include(c => c.Items)
+                   .ToListAsync();
+
+            foreach (var collection in collections)
+            {
+                var items = collection.Items.ToList();
+                foreach (var item in items)
+                {
+                    var comments = await _context.Comments.Where(c => c.ItemId == item.Id).ToListAsync();
+                    var likes = await _context.Likes.Where(l => l.ItemId == item.Id).ToListAsync();
+
+                    _context.Comments.RemoveRange(comments);
+                    _context.Likes.RemoveRange(likes);
+                    _context.Items.Remove(item);
+                }
+                _context.Collections.Remove(collection);
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }
