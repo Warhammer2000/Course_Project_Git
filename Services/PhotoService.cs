@@ -8,37 +8,46 @@ namespace CourseProjectItems.Services
 {
 	public class PhotoService : IPhotoService
 	{
-		private readonly Cloudinary _cloudinary;
+        private readonly Cloudinary _cloudinary;
+        private readonly string[] _validExtensions = { ".png", ".jpeg", ".jpg" };
 
-		public PhotoService(Cloudinary cloudinary)
-		{
-			_cloudinary = cloudinary;
-		}
+        public PhotoService(Cloudinary cloudinary)
+        {
+            _cloudinary = cloudinary;
+        }
 
-		public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
-		{
-			var uploadResult = new ImageUploadResult();
+        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        {
+            var uploadResult = new ImageUploadResult();
 
-			if (file.Length > 0)
-			{
-				await using var stream = file.OpenReadStream();
-				var uploadParams = new ImageUploadParams
-				{
-					File = new FileDescription(file.FileName, stream)
-				};
+            if (file.Length > 0)
+            {
+                var extension = Path.GetExtension(file.FileName).ToLower();
 
-				uploadResult = await _cloudinary.UploadAsync(uploadParams);
-			}
+                if (!_validExtensions.Contains(extension))
+                {
+                    uploadResult.Error = new Error { Message = "Invalid file type. Only .png, .jpeg, and .jpg files are allowed." };
+                    return uploadResult;
+                }
 
-			return uploadResult;
-		}
+                await using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream)
+                };
 
-		public async Task<DeletionResult> DeletePhotoAsync(string publicUrl)
-		{
-			var deleteParams = new DeletionParams(publicUrl);
-			var result = await _cloudinary.DestroyAsync(deleteParams);
+                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            }
 
-			return result;
-		}
-	}
+            return uploadResult;
+        }
+
+        public async Task<DeletionResult> DeletePhotoAsync(string publicUrl)
+        {
+            var deleteParams = new DeletionParams(publicUrl);
+            var result = await _cloudinary.DestroyAsync(deleteParams);
+
+            return result;
+        }
+    }
 }

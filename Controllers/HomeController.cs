@@ -27,8 +27,9 @@ namespace CourseProjectItems.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                itemsQuery = itemsQuery.Where(i => EF.Functions.Contains(i.Name, searchString) || EF.Functions.Contains(i.Description, searchString));
-                collectionsQuery = collectionsQuery.Where(c => EF.Functions.Contains(c.Name, searchString) || EF.Functions.Contains(c.Description, searchString));
+                string formattedSearchString = "\"" + searchString + "\"";
+                itemsQuery = itemsQuery.Where(i => EF.Functions.Contains(i.Name, formattedSearchString) || EF.Functions.Contains(i.Description, formattedSearchString));
+                collectionsQuery = collectionsQuery.Where(c => EF.Functions.Contains(c.Name, formattedSearchString) || EF.Functions.Contains(c.Description, formattedSearchString));
             }
 
             var searchViewModel = new SearchViewModel

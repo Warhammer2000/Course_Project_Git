@@ -15,7 +15,10 @@
 
 <div>
     <h3>@Localizer["Collections"] <i class="fas fa-th-large"></i></h3>
-    <a asp-action="Create" asp-controller="Collections" class="btn btn-primary">@Localizer["Add New Collection"] <i class="fas fa-plus"></i></a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create" asp-controller="Collections" class="btn btn-primary">@Localizer["Add New Collection"] <i class="fas fa-plus"></i></a>
+    }
     @if (Model.Collections != null && Model.Collections.Any())
     {
         <table class="table">

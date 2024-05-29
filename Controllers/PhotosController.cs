@@ -16,26 +16,44 @@ namespace CourseProjectItems.Controllers
 			_photoService = photoService;
 		}
 
-		[HttpPost("upload")]
-		public async Task<IActionResult> UploadPhoto(IFormFile file)
-		{
-			var result = await _photoService.AddPhotoAsync(file);
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadPhoto(IFormFile file)
+        {
+            if (file == null)
+            {
+                return BadRequest("No file uploaded.");
+            }
 
-			if (result.Error != null)
-				return BadRequest(result.Error.Message);
+            var validExtensions = new[] { ".png", ".jpeg", ".jpg" };
+            var extension = Path.GetExtension(file.FileName).ToLower();
 
-			return Ok(new { result.Url });
-		}
+            if (!validExtensions.Contains(extension))
+            {
+                return BadRequest("Invalid file type. Only .png, .jpeg, and .jpg files are allowed.");
+            }
 
-		[HttpDelete("delete")]
-		public async Task<IActionResult> DeletePhoto(string publicId)
-		{
-			var result = await _photoService.DeletePhotoAsync(publicId);
+            var result = await _photoService.AddPhotoAsync(file);
 
-			if (result.Error != null)
-				return BadRequest(result.Error.Message);
+            if (result.Error != null)
+            {
+                return BadRequest(result.Error.Message);
+            }
 
-			return Ok(result.Result);
-		}
-	}
+            return Ok(new { result.Url });
+        }
+
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeletePhoto(string publicId)
+        {
+            var result = await _photoService.DeletePhotoAsync(publicId);
+
+            if (result.Error != null)
+            {
+                return BadRequest(result.Error.Message);
+            }
+
+            return Ok(result.Result);
+        }
+    }
 }

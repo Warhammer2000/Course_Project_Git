@@ -151,7 +151,8 @@ namespace CourseProjectItems.Controllers
 		{
 			var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
-			var userName = User.Identity.Name ?? "Admin";
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            var userName = User.Identity.Name ?? "Admin";
 			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
             {
                 return View("Unauthorized", "You do not have permission to create a collection.");
@@ -160,7 +161,10 @@ namespace CourseProjectItems.Controllers
 			{
 				return View("Unauthorized", "You need to log in to create a collection.");
 			}
-
+			if (!isAuthenticatedAndEmailConfirmed)
+            {
+                return View("Unauthorized", "You do not have permission to create a collection. Please confirm your e-mail.");
+            }
 			var collection = new Collection
 			{
 				Name = viewModel.Name,
@@ -186,12 +190,12 @@ namespace CourseProjectItems.Controllers
 			{
 				return View("NotFound", "The collection you are trying to edit does not exist.");
 			}
-
-			var userId = _userManager.GetUserId(User);
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to create a collection.");
+                return View("Unauthorized", "You do not have permission to create a collection. You may be blocked by Admin or not confrim your email.");
             }
             if (collection.AuthorID != userId && !User.IsInRole(UserRoles.Admin))
 			{
@@ -229,12 +233,12 @@ namespace CourseProjectItems.Controllers
 			{
 				return View("NotFound", "The collection you are trying to edit does not exist.");
 			}
-
-			var userId = _userManager.GetUserId(User);
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to create a collection.");
+                return View("Unauthorized", "You do not have permission to create a collection.You may be blocked by Admin or not confrim your email.");
             }
             if (collection.AuthorID != userId && !User.IsInRole(UserRoles.Admin))
 			{
@@ -264,12 +268,12 @@ namespace CourseProjectItems.Controllers
 			{
 				return View("NotFound", "The collection you are trying to delete does not exist.");
 			}
-
-			var userId = _userManager.GetUserId(User);
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to create a collection.");
+                return View("Unauthorized", "You do not have permission to delete a collection.You may be blocked by Admin or not confrim your email.");
             }
             if (collection.AuthorID != userId && !User.IsInRole(UserRoles.Admin))
 			{
@@ -299,12 +303,12 @@ namespace CourseProjectItems.Controllers
 			{
 				return View("NotFound", "The collection you are trying to delete does not exist.");
 			}
-
-			var userId = _userManager.GetUserId(User);
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to create a collection.");
+                return View("Unauthorized", "You do not have permission to delete a collection.You may be blocked by Admin or not confrim your email.");
             }
             if (collection.AuthorID != userId && !User.IsInRole(UserRoles.Admin))
 			{
@@ -370,9 +374,20 @@ namespace CourseProjectItems.Controllers
 				writer.Flush();
 				var fileName = $"{collection.Name}_Items.csv";
 				return File(memoryStream.ToArray(), "text/csv", fileName);
+				
 			}
 		}
+        public async Task<bool> IsAuthenticatedAndEmailConfirmed(UserManager<ApplicationUser> userManager)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                return await userManager.IsEmailConfirmedAsync(user);
+            }
+            return false;
+        }
 
 
-	}
+
+    }
 }

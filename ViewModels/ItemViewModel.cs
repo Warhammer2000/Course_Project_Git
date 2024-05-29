@@ -20,8 +20,6 @@ namespace CourseProjectItems.ViewModels
 
 		public List<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
 		public List<LikeViewModel> Likes { get; set; } = new List<LikeViewModel>();
-
-        [Display(Name = "Upload Photo")]
         public IFormFile Photo { get; set; }
         public string Tags { get; set; }
         public  string AdditionalFields { get; set; } 

@@ -127,12 +127,12 @@ namespace CourseProjectItems.Controllers
 			{
                 return View("NotFound", "The item you are trying to comment on does not exist.");
             }
-
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			var user = await _userManager.FindByIdAsync(userId);
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to create an item.");
+                return View("Unauthorized", "You do not have permission to create an item. You may be blocked by Admin or not confrim your email.");
             }
 
             var viewModel = new ItemViewModel
@@ -155,10 +155,10 @@ namespace CourseProjectItems.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to edit this item.");
+                return View("Unauthorized", "You do not have permission to create this item. You may be blocked by Admin or not confrim your email.");
             }
 
             var item = new Item
@@ -173,16 +173,25 @@ namespace CourseProjectItems.Controllers
 				AdditionalFields = viewModel.AdditionalFields
 			};
 
-			if (viewModel.Photo != null)
-			{
-				var uploadResult = await _photoService.AddPhotoAsync(viewModel.Photo);
-				if (uploadResult != null)
-				{
-					item.PhotoUrl = uploadResult.Url.ToString();
-					viewModel.PhotoUrl = uploadResult.Url.ToString();
-				}
-			}
-			await _itemRepository.Add(item);
+            if (viewModel.Photo != null)
+            {
+                var uploadResult = await _photoService.AddPhotoAsync(viewModel.Photo);
+                if (uploadResult != null && uploadResult.Url != null)
+                {
+                    item.PhotoUrl = uploadResult.Url.ToString();
+                    viewModel.PhotoUrl = uploadResult.Url.ToString();
+                }
+                else
+                {
+                    item.PhotoUrl = string.Empty;
+                }
+            }
+            else
+            {
+                item.PhotoUrl = string.Empty;
+            }
+
+            await _itemRepository.Add(item);
 
 			if (!string.IsNullOrWhiteSpace(viewModel.Comments[0].Message))
 			{
@@ -210,14 +219,14 @@ namespace CourseProjectItems.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-
-			if (item == null)
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            if (item == null)
 			{
 				return View("NotFound", "The item you are trying to comment on does not exist.");
 			}
-			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to edit this item.");
+                return View("Unauthorized", "You do not have permission to edit this item. You may be blocked by Admin or not confrim your email.");
             }
 			if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin))
 			{
@@ -258,13 +267,14 @@ namespace CourseProjectItems.Controllers
             }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-			if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin))
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin))
 			{
 				return View("Forbidden", "Only the author or an admin can delete this collection.");
 			}
-			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to edit this item.");
+                return View("Unauthorized", "You do not have permission to edit this item. You may be blocked by Admin or not confrim your email.");
             }
 
             item.Name = viewModel.Name;
@@ -310,13 +320,14 @@ namespace CourseProjectItems.Controllers
             }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-			if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin))
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin))
 			{
 				return View("Forbidden", "Only the author or an admin can delete this collection.");
 			}
-			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+			if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to edit this item.");
+                return View("Unauthorized", "You do not have permission to delete this item. You may be blocked by Admin or not confrim your email.");
             }
             var viewModel = new ItemViewModel
 			{
@@ -336,10 +347,10 @@ namespace CourseProjectItems.Controllers
 			var item = await _itemRepository.GetById(id);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked)
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            if (user == null || user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.Now || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to edit this item.");
+                return View("Unauthorized", "You do not have permission to delete this comment.");
             }
 			if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin))
 			{
@@ -408,15 +419,25 @@ namespace CourseProjectItems.Controllers
 
             var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
-            if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin) || user.IsBlocked)
+            var isAuthenticatedAndEmailConfirmed = await IsAuthenticatedAndEmailConfirmed(_userManager);
+            if (item.AuthorId != userId && !User.IsInRole(UserRoles.Admin) || user.IsBlocked || !isAuthenticatedAndEmailConfirmed)
             {
-                return View("Unauthorized", "You do not have permission to delete this comment.");
+                return View("Unauthorized", "You do not have permission to delete this comment. You may be blocked by Admin or not confrim your email.");
             }
 
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = item.Id });
+        }
+        public async Task<bool> IsAuthenticatedAndEmailConfirmed(UserManager<ApplicationUser> userManager)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                return await userManager.IsEmailConfirmedAsync(user);
+            }
+            return false;
         }
     }
 }
