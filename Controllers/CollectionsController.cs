@@ -217,7 +217,7 @@ namespace CourseProjectItems.Controllers
 			return View(viewModel);
 		}
 
-		// POST: Collections/Edit/5
+		// POST: Collections/Edit
 		[HttpPost]
 		[ValidateAntiForgeryToken]
         [Authorize(Roles = UserRoles.Admin + "," + UserRoles.User)]
@@ -348,7 +348,6 @@ namespace CourseProjectItems.Controllers
 			using (var writer = new StreamWriter(memoryStream, Encoding.UTF8))
 			using (var csvWriter = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = "," }))
 			{
-				// Настраиваем заголовки
 				csvWriter.WriteField("ID");
 				csvWriter.WriteField("Name");
 				csvWriter.WriteField("Description");
@@ -358,7 +357,6 @@ namespace CourseProjectItems.Controllers
 				csvWriter.WriteField("Created By");
 				csvWriter.NextRecord();
 
-				// Записываем данные
 				foreach (var item in items)
 				{
 					csvWriter.WriteField(item.Id);
@@ -386,8 +384,5 @@ namespace CourseProjectItems.Controllers
             }
             return false;
         }
-
-
-
     }
 }

@@ -116,33 +116,3 @@ namespace CourseProjectItems.Controllers
 		}
 	}
 }
-
-
-
-
-
-
-//public async Task<IActionResult> Index()
-//{
-//	var largestCollections = await _context.Collections
-//		.Include(c => c.Items)
-//		.OrderByDescending(c => c.Items.Count)
-//		.Take(5)
-//		.ToListAsync();
-
-//	var tags =  _context.Items
-//		.AsEnumerable() // Переключение на клиентскую сторону для обработки тэгов
-//		.SelectMany(i => i.Tags.Split())
-//		.GroupBy(t => t)
-//		.Select(g => new { Tag = g.Key, Count = g.Count() })
-//		.OrderByDescending(t => t.Count)
-//		.ToList();
-
-//	var viewModel = new HomeViewModel
-//	{
-//		LargestCollections = largestCollections,
-//		Tags = tags.Select(t => t.Tag).ToList()
-//	};
-
-//	return View(viewModel);
-//}

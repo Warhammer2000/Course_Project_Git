@@ -21,18 +21,18 @@ namespace CourseProjectItems.Repositories
 
 		public async Task<IEnumerable<T>> GetAll()
 		{
-			return await _dbSet.ToListAsync(); // Получить все записи
+			return await _dbSet.ToListAsync(); 
 		}
 
 		public async Task<T> GetById(int id)
 		{
-			return await _dbSet.FindAsync(id); // Найти запись по ID
+			return await _dbSet.FindAsync(id); 
 		}
 
 		public async Task Add(T entity)
 		{
-			await _dbSet.AddAsync(entity); // Добавить новую запись
-			await _context.SaveChangesAsync(); // Сохранить изменения
+			await _dbSet.AddAsync(entity); 
+			await _context.SaveChangesAsync(); 
 		}
 
 		public async Task Update(T entity)
@@ -49,11 +49,11 @@ namespace CourseProjectItems.Repositories
 
 		public async Task Delete(int id)
 		{
-			var entity = await GetById(id); // Найти запись по ID
+			var entity = await GetById(id); 
 			if (entity != null)
 			{
-				_dbSet.Remove(entity); // Удалить запись
-				await _context.SaveChangesAsync(); // Сохранить изменения
+				_dbSet.Remove(entity); 
+				await _context.SaveChangesAsync(); 
 			}
 		}
 

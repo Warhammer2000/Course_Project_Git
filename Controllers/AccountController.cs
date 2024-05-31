@@ -17,8 +17,8 @@ namespace CourseProjectItems.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
         public AccountController(UserManager<ApplicationUser> userManager,
-	        SignInManager<ApplicationUser> signInManager,
-	        ApplicationDbContext context, IEmailSender emailSender)
+            SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -67,8 +67,6 @@ namespace CourseProjectItems.Controllers
                 ModelState.AddModelError(string.Empty, "Wrong credentials. Please try again");
                 return View(loginViewModel);
             }
-
-            //User not found
             ModelState.AddModelError(string.Empty, "Wrong credentials. Please try again");
             return View(loginViewModel);
         }
@@ -84,54 +82,51 @@ namespace CourseProjectItems.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-			if (!ModelState.IsValid)
-			{
-				return View(registerViewModel);
-			}
+            if (!ModelState.IsValid)
+            {
+                return View(registerViewModel);
+            }
 
-			var user = await _userManager.FindByEmailAsync(registerViewModel.Email);
-			if (user != null)
-			{
-				ModelState.AddModelError(string.Empty, "This email address is already in use");
-				Console.WriteLine("This email address is already in use");
-				return View(registerViewModel);
-			}
+            var user = await _userManager.FindByEmailAsync(registerViewModel.Email);
+            if (user != null)
+            {
+                ModelState.AddModelError(string.Empty, "This email address is already in use");
+                Console.WriteLine("This email address is already in use");
+                return View(registerViewModel);
+            }
 
-			var newUser = new ApplicationUser()
-			{
-				LockoutEnabled = false,
-				Email = registerViewModel.Email,
-				UserName = registerViewModel.UserName
-			};
+            var newUser = new ApplicationUser()
+            {
+                LockoutEnabled = false,
+                Email = registerViewModel.Email,
+                UserName = registerViewModel.UserName
+            };
 
-			var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
+            var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
-			if (newUserResponse.Succeeded)
-			{
-				// Генерация кода подтверждения
-				var code = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-				var callbackUrl = Url.Action(
-					"ConfirmEmail", "Account",
-					new { userId = newUser.Id, code = code },
-					protocol: HttpContext.Request.Scheme);
+            if (newUserResponse.Succeeded)
+            {
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                var callbackUrl = Url.Action(
+                    "ConfirmEmail", "Account",
+                    new { userId = newUser.Id, code = code },
+                    protocol: HttpContext.Request.Scheme);
 
-				// Отправка письма с подтверждением
-				await _emailSender.SendEmailAsync(registerViewModel.Email, "Confirm your email",
-					$"Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.");
+                await _emailSender.SendEmailAsync(registerViewModel.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.");
 
-				// Добавление пользователя в роль и вход в систему
-				await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-				await _signInManager.SignInAsync(newUser, isPersistent: false);
-				return RedirectToAction("RegisterConfirmation", new { email = registerViewModel.Email });
-			}
+                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+                await _signInManager.SignInAsync(newUser, isPersistent: false);
+                return RedirectToAction("RegisterConfirmation", new { email = registerViewModel.Email });
+            }
 
-			foreach (var error in newUserResponse.Errors)
-			{
-				ModelState.AddModelError(string.Empty, error.Description);
-				Console.WriteLine("error " + error.Description);
-			}
-			return View(registerViewModel);
-		}
+            foreach (var error in newUserResponse.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+                Console.WriteLine("error " + error.Description);
+            }
+            return View(registerViewModel);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

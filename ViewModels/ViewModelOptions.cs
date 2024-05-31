@@ -11,9 +11,6 @@ namespace CourseProjectItems.ViewModels
         public (IQueryable<T> Result, int PageSizeCollection) GetSortedAndFilteredCollection(
             CollectionType? type, int page, SortState sortOrder)
         {
-            // Здесь добавьте логику для сортировки и фильтрации коллекций
-            // Возвращайте отсортированные и отфильтрованные коллекции и количество элементов на странице
-            // Например:
             var query = Collections;
             if (type.HasValue)
             {

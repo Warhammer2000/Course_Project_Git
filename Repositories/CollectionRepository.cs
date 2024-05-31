@@ -14,7 +14,7 @@ namespace CourseProjectItems.Repositories
 
 		public async Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId)
 		{
-			return await _context.Collections.Where(c => c.AuthorID == userId).ToListAsync(); // Изменено на AuthorID
+			return await _context.Collections.Where(c => c.AuthorID == userId).ToListAsync(); 
 		}
 	}
 }

@@ -4,5 +4,5 @@ namespace CourseProjectItems.Interfaces;
 
 public interface ICollectionRepository : IGenericRepository<Collection>
 {
-	Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId); // Получить коллекции по ID пользователя
+	Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId);
 }
