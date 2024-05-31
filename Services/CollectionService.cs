@@ -16,32 +16,88 @@ namespace CourseProjectItems.Services
 
 		public async Task<IEnumerable<Collection>> GetAllCollections()
 		{
-			return await _collectionRepository.GetAll();
+            var collections = await _collectionRepository.GetAll();
+            if (collections == null)
+            {
+                throw new InvalidOperationException("No collections found");
+            }
+            return await _collectionRepository.GetAll();
 		}
 
 		public async Task<Collection> GetCollectionById(int id)
 		{
-			return await _collectionRepository.GetById(id);
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid collection ID");
+            }
+
+            var collection = await _collectionRepository.GetById(id);
+            if (collection == null)
+            {
+                throw new KeyNotFoundException($"Collection with ID {id} not found");
+            }
+            return await _collectionRepository.GetById(id);
 		}
 
 		public async Task AddCollection(Collection collection)
 		{
-			await _collectionRepository.Add(collection);
+            if (string.IsNullOrWhiteSpace(collection.Name))
+            {
+                throw new ArgumentException("Collection name cannot be empty");
+            }
+			
+            await _collectionRepository.Add(collection);
 		}
 
 		public async Task UpdateCollection(Collection collection)
 		{
-			await _collectionRepository.Update(collection);
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            if (collection.Id <= 0)
+            {
+                throw new ArgumentException("Invalid collection ID");
+            }
+
+            var existingCollection = await _collectionRepository.GetById(collection.Id);
+            if (existingCollection == null)
+            {
+                throw new KeyNotFoundException($"Collection with ID {collection.Id} not found");
+            }
+            await _collectionRepository.Update(collection);
 		}
 
 		public async Task DeleteCollection(int id)
 		{
-			await _collectionRepository.Delete(id);
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid collection ID");
+            }
+
+            var existingCollection = await _collectionRepository.GetById(id);
+            if (existingCollection == null)
+            {
+                throw new KeyNotFoundException($"Collection with ID {id} not found");
+            }
+
+            await _collectionRepository.Delete(id);
 		}
 
 		public async Task<IEnumerable<Collection>> GetCollectionsByUserId(string userId)
 		{
-			return await _collectionRepository.GetCollectionsByUserId(userId);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new ArgumentException("User ID cannot be empty");
+            }
+
+            var collections = await _collectionRepository.GetCollectionsByUserId(userId);
+            if (collections == null)
+            {
+                throw new InvalidOperationException($"No collections found for user ID {userId}");
+            }
+            return await _collectionRepository.GetCollectionsByUserId(userId);
 		}
 	}
 
