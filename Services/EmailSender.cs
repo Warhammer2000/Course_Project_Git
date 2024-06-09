@@ -25,11 +25,6 @@ namespace CourseProjectItems.Services
             var userName = smtpSettings["UserName"];
             var password = smtpSettings["Password"];
 
-            Console.WriteLine($"Host: {host}");
-            Console.WriteLine($"Port: {portString}");
-            Console.WriteLine($"EnableSsl: {enableSslString}");
-            Console.WriteLine($"UserName: {userName}");
-            Console.WriteLine($"Password: {password}");
 
             if (host == null || portString == null || enableSslString == null || userName == null || password == null)
             {

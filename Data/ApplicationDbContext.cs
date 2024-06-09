@@ -27,9 +27,9 @@ namespace CourseProjectItems.Data
 				.HasMany(c => c.Items)
 				.WithOne(i => i.Collection)
 				.HasForeignKey(i => i.CollectionId)
-				.OnDelete(DeleteBehavior.Cascade);
+				.OnDelete(DeleteBehavior.Cascade); 
 
-			modelBuilder.Entity<Item>()
+			modelBuilder.Entity<Item>()      //Повторение
 				.HasOne(i => i.Collection)
 				.WithMany(c => c.Items)
 				.HasForeignKey(i => i.CollectionId)

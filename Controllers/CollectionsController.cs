@@ -28,7 +28,9 @@ namespace CourseProjectItems.Controllers
 			_collectionRepository = collectionRepository;
 		}
 
-		[AllowAnonymous]
+
+
+        [AllowAnonymous]
 		public async Task<IActionResult> Index()
 		{
             var collections = new List<Collection>();
@@ -93,6 +95,8 @@ namespace CourseProjectItems.Controllers
 				return View("NotFound", "The collection you are trying to view does not exist.");
 			}
 
+
+			//AutoMapper 
 			var viewModel = new CollectionViewModel
 			{
 				Id = collection.Id,

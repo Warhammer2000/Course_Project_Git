@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "ShowGenerateTokenForm";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2 class="card-title">Generate API Token</h2>
+                </div>
+                <div class="card-body text-center">
+                    <form asp-controller="CollectionsApi" asp-action="GenerateToken" method="post">
+                        <button type="submit" class="btn btn-primary">Generate API Token</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

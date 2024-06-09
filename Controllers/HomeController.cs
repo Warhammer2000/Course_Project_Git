@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
 using CourseProjectItems.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace CourseProjectItems.Controllers
 {
@@ -15,10 +16,14 @@ namespace CourseProjectItems.Controllers
 	{
 		private readonly IGenericRepository<Collection> _collectionRepository;
 		private readonly ApplicationDbContext _context;
-		public HomeController(ApplicationDbContext context, IGenericRepository<Collection> collectionRepository)
+		private readonly UserManager<ApplicationUser> _userManager;
+		public HomeController(ApplicationDbContext context,
+            IGenericRepository<Collection> collectionRepository,
+            UserManager<ApplicationUser> userManager)
 		{
 			_context = context;
-			_collectionRepository = collectionRepository;
+            _collectionRepository = collectionRepository;
+            _userManager = userManager;
 		}
         public async Task<IActionResult> Index(string searchString)
         {
@@ -31,6 +36,7 @@ namespace CourseProjectItems.Controllers
                 itemsQuery = itemsQuery.Where(i => EF.Functions.Contains(i.Name, formattedSearchString) || EF.Functions.Contains(i.Description, formattedSearchString));
                 collectionsQuery = collectionsQuery.Where(c => EF.Functions.Contains(c.Name, formattedSearchString) || EF.Functions.Contains(c.Description, formattedSearchString));
             }
+            //LastickSearch 
 
             var searchViewModel = new SearchViewModel
             {
@@ -78,8 +84,9 @@ namespace CourseProjectItems.Controllers
             };
 
             ViewBag.LanguageOptions = GenerateLanguageOptions(languages);
-
-            return View(new HomeIndexViewModel { SearchResults = searchViewModel, Collections = viewModel });
+			var user = await _userManager.GetUserAsync(User);
+			ViewBag.UserEmail = user?.Email;
+			return View(new HomeIndexViewModel { SearchResults = searchViewModel, Collections = viewModel });
         }
 
         private string GenerateLanguageOptions(List<SelectListItem> languages)

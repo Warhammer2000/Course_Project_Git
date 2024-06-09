@@ -21,6 +21,8 @@ builder.Logging.AddConsole();
 
 builder.Services.AddControllersWithViews();
 
+
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -61,7 +63,7 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 builder.Services.AddMvc()
 	.AddViewLocalization();
 
-
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
 builder.Services.AddScoped<ICollectionService, CollectionService>();
@@ -71,6 +73,12 @@ builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "AAAAAAAAAAAAAAAAAAAAMACARENA";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+});
 
 var app = builder.Build();
 
@@ -102,12 +110,20 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "jira",
+    pattern: "jira/{action=Index}/{id?}",
+    defaults: new { controller = "Jira", action = "Index" });
+
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     await SeedAdminAsync(userManager, roleManager);
 }
+
+app.UseSession();
+
 app.Run();
 
 static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
@@ -125,7 +141,7 @@ static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleM
     }
     if (await userManager.FindByEmailAsync(adminEmail) == null)
     {
-        var adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true};
+        var adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true, ApiToken = String.Empty};
         var result = await userManager.CreateAsync(adminUser, adminPassword);
         if (result.Succeeded)
         {

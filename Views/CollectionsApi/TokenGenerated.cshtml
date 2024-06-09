@@ -1,0 +1,55 @@
+﻿@model Tuple<string, string> // Tuple<string, string> - Item1: Original JWT Token, Item2: API Token
+
+@{
+    ViewBag.Title = "Token Generated";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-success text-white">
+                    <h2 class="card-title mb-0">Token Generated Successfully</h2>
+                </div>
+                <div class="card-body text-center">
+                    <p class="mt-3">Your API token is:</p>
+                    <div class="alert alert-success">
+                        <a href="#" id="api-token-link" data-token="@Model.Item2" class="text-success" style="font-weight: bold;">
+                            Click here to copy API Token
+                        </a>
+                    </div>
+
+                    <!-- Группируем кнопки в один блок -->
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+                        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#jwtToken" aria-expanded="false" aria-controls="jwtToken">
+                            Show Original Tokens
+                        </button>
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Go to Home</a>
+                    </div>
+
+                    <!-- Панель с JWT Token и полным API Token -->
+                    <div class="collapse mt-4" id="jwtToken">
+                        <div class="alert alert-info">
+                            <p><strong>Original JWT Token:</strong></p>
+                            <p class="token-text"><code>@Model.Item1</code></p>
+                            <p><strong>Full API Token:</strong></p>
+                            <p class="token-text"><code>@Model.Item2</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('api-token-link').addEventListener('click', function (event) {
+        event.preventDefault();
+        var token = this.getAttribute('data-token');
+        navigator.clipboard.writeText(token).then(function () {
+            alert('API Token copied to clipboard');
+        }).catch(function (error) {
+            console.error('Copy failed', error);
+        });
+    });
+</script>

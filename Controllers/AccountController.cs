@@ -57,15 +57,15 @@ namespace CourseProjectItems.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
-                    if (result.IsLockedOut)
-                    {
-                        ModelState.AddModelError(string.Empty, "Account is locked");
-                        return View(loginViewModel);
-                    }
+                    //if (result.IsLockedOut)
+                    //{
+                    //    ModelState.AddModelError(string.Empty, "Account is locked");
+                    //    return View(loginViewModel);
+                    //}
                 }
 
-                ModelState.AddModelError(string.Empty, "Wrong credentials. Please try again");
-                return View(loginViewModel);
+                //ModelState.AddModelError(string.Empty, "Wrong credentials. Please try again");
+                //return View(loginViewModel);
             }
             ModelState.AddModelError(string.Empty, "Wrong credentials. Please try again");
             return View(loginViewModel);
@@ -99,7 +99,8 @@ namespace CourseProjectItems.Controllers
             {
                 LockoutEnabled = false,
                 Email = registerViewModel.Email,
-                UserName = registerViewModel.UserName
+                UserName = registerViewModel.UserName,
+                ApiToken = String.Empty,
             };
 
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
