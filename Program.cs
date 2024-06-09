@@ -72,6 +72,7 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ITicketsRepository, TicketsRepository>();
 
 builder.Services.AddSession(options =>
 {

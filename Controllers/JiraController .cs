@@ -1,4 +1,5 @@
 ﻿using CourseProjectItems.Data;
+using CourseProjectItems.Interfaces;
 using CourseProjectItems.Models;
 using CourseProjectItems.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -14,15 +15,17 @@ namespace CourseProjectItems.Controllers
   public class JiraController : Controller
     {
         private readonly string _jiraBaseUrl = "https://warhammerdev.atlassian.net/";
-        private readonly string _jiraApiToken = "ATATT3xFfGF0_xHI1KJzFIp2LhVxMLOgcZemoMyh90T78I58E1sb5fhSWnqlV3g48mT_oAV5UxTJuC04W6nAMtmsOWSSVITOjpIS2j48klu8aLUJAZi00RgFLs6cTSGuF6YQsVZeFpBbmUfdoEVeTTkRcOC8Xm3RqnW2tQQJ3H0_SuEK_V-mtAI=97BC97D2";
+		private readonly string _jiraApiToken = "ATATT3xFfGF0_xHI1KJzFIp2LhVxMLOgcZemoMyh90T78I58E1sb5fhSWnqlV3g48mT_oAV5UxTJuC04W6nAMtmsOWSSVITOjpIS2j48klu8aLUJAZi00RgFLs6cTSGuF6YQsVZeFpBbmUfdoEVeTTkRcOC8Xm3RqnW2tQQJ3H0_SuEK_V-mtAI=97BC97D2";
+		//private readonly string _jiraApiToken = "Вставить значение сверху";
         private readonly string _jiraProjectKey = "IN";
         public string _returnUrl = "/";
         public string issueUrl;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public JiraController(UserManager<ApplicationUser> userManager)
+        private readonly ITicketsRepository _ticketsRepository;
+        public JiraController(UserManager<ApplicationUser> userManager, ITicketsRepository ticketsRepository)
         {
             _userManager = userManager;
+            _ticketsRepository = ticketsRepository;
         }
 
         [HttpGet]
@@ -147,6 +150,20 @@ namespace CourseProjectItems.Controllers
                 var createdIssue = JsonConvert.DeserializeObject<JObject>(responseContent);
                 var issueKey = createdIssue.Value<string>("key");
                 issueUrl = $"{_jiraBaseUrl}/browse/{issueKey}";
+             
+
+                var ticket = new Ticket
+                {
+                    UserId = user.Id,
+                    Title = model.Summary,
+                    Description = model.Description,
+                    CreatedDate = DateTime.Now,
+                    Status = "Opened",
+                    JiraIssueKey = issueKey,
+                    JiraIssueUrl = issueUrl
+                };
+
+                await _ticketsRepository.AddAsync(ticket);
                 return RedirectToAction("Success", new { url = issueUrl });
             }
             else

@@ -1,0 +1,103 @@
+﻿@model CourseProjectItems.Models.Ticket
+
+@{
+    ViewBag.Title = "Ticket Details";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">
+                <i class="fas fa-ticket-alt"></i> Ticket Details
+            </h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3 font-weight-bold">Title</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
+
+                <dt class="col-sm-3 font-weight-bold">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+
+                <dt class="col-sm-3 font-weight-bold">Created Date</dt>
+                <dd class="col-sm-9">@Model.CreatedDate.ToString("f")</dd>
+
+                <dt class="col-sm-3 font-weight-bold">Status</dt>
+                <dd class="col-sm-9">@Model.Status</dd>
+
+                <dt class="col-sm-3 font-weight-bold">Jira Issue Key</dt>
+                <dd class="col-sm-9">@Model.JiraIssueKey</dd>
+
+                <dt class="col-sm-3 font-weight-bold">Jira Issue URL</dt>
+                <dd class="col-sm-9">
+                    @if (!string.IsNullOrEmpty(Model.JiraIssueUrl))
+                    {
+                        <a href="@Model.JiraIssueUrl" target="_blank" class="text-decoration-none">
+                            <i class="fas fa-external-link-alt"></i> @Model.JiraIssueUrl
+                        </a>
+                    }
+                    else
+                    {
+                        <span>N/A</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer text-right">
+            <a href="@Url.Action("Index", "Tickets")" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Tickets
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Подключение Bootstrap и FontAwesome -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!-- Встроенные стили -->
+<style>
+    .card {
+        border-radius: 10px;
+    }
+
+    .card-header {
+        background-color: #007bff;
+    }
+
+    .card-title i {
+        margin-right: 10px;
+    }
+
+    .badge {
+        padding: 0.5em 1em;
+        font-size: 0.9em;
+        border-radius: 5px;
+    }
+
+    /* Стили для разных статусов */
+    .badge-open {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-in-progress {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .badge-closed {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-decoration-none {
+        text-decoration: none;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>

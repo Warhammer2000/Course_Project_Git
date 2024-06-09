@@ -45,6 +45,9 @@
 								<a class="nav-link" asp-area="" asp-controller="Account" asp-action="UserPage">@Localizer["My Account"]</a>
 							</li>
 							<li class="nav-item">
+								<a class="nav-link" asp-controller="Tickets" asp-action="Index">Your Tickets From Jira</a>
+							</li>
+							<li class="nav-item">
 								<form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="form-inline">
 									<button type="submit" class="nav-link btn btn-link">@Localizer["Logout"]</button>
 								</form>
