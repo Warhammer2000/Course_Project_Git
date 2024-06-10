@@ -102,11 +102,6 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
 
-var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".unityweb"] = "application/octet-stream";
-provider.Mappings[".data"] = "application/octet-stream";
-provider.Mappings[".wasm"] = "application/wasm";
-
 
 app.UseStaticFiles(CustomStaticFileOptions.GetOptions());
 
