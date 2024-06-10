@@ -15,7 +15,7 @@ namespace CourseProjectItems.Controllers
   public class JiraController : Controller
     {
         private readonly string _jiraBaseUrl = "https://warhammerdev.atlassian.net/";
-		private readonly string _jiraApiToken = "ATATT3xFfGF0_xHI1KJzFIp2LhVxMLOgcZemoMyh90T78I58E1sb5fhSWnqlV3g48mT_oAV5UxTJuC04W6nAMtmsOWSSVITOjpIS2j48klu8aLUJAZi00RgFLs6cTSGuF6YQsVZeFpBbmUfdoEVeTTkRcOC8Xm3RqnW2tQQJ3H0_SuEK_V-mtAI=97BC97D2";
+		private readonly string _jiraApiToken = "ATATT3xFfGF0PNLcQfiFmxgxUr4K41Q-HTQhNx34FPXGjnzQLoyF32_sAWQHP7ZC1AMigRfImtKrT3Y4JAqcJO_5rzW5N2x55dLNu4rdgTjYNYWU1dIkW1fSEl5zrqWhVRztcvIS9Jafkp_B_pl9kpu6W6oBQVrXqLrNdkzeZz8xdRoVinL2weQ=B8607914";
 		//private readonly string _jiraApiToken = "Вставить значение сверху";
         private readonly string _jiraProjectKey = "IN";
         public string _returnUrl = "/";
@@ -56,8 +56,7 @@ namespace CourseProjectItems.Controllers
             var userCheckResponse = await client.GetAsync($"{_jiraBaseUrl}/rest/api/3/user/search?query={email}");
             if (userCheckResponse.IsSuccessStatusCode)
             {
-                // Проверяем содержимое ответа сервера
-                // Create new user if not exists
+               
                 var newUser = new
                 {
                     name = User.Identity.Name.Split('@')[0],

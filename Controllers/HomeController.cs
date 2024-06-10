@@ -25,7 +25,13 @@ namespace CourseProjectItems.Controllers
             _collectionRepository = collectionRepository;
             _userManager = userManager;
 		}
-        public async Task<IActionResult> Index(string searchString)
+
+		public IActionResult UnityGame()
+		{
+			return Redirect("/unity_build/index.html");
+		}
+
+		public async Task<IActionResult> Index(string searchString)
         {
             var itemsQuery = _context.Items.AsQueryable();
             var collectionsQuery = _context.Collections.AsQueryable();

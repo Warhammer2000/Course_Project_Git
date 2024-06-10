@@ -25,4 +25,23 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\unity_build\Build\UnityLoader.js" />
+    <None Include="wwwroot\unity_build\Build\WEBGL_2D_ROGUE_LIKE.data.unityweb" />
+    <None Include="wwwroot\unity_build\Build\WEBGL_2D_ROGUE_LIKE.wasm.code.unityweb" />
+    <None Include="wwwroot\unity_build\Build\WEBGL_2D_ROGUE_LIKE.wasm.framework.unityweb" />
+    <None Include="wwwroot\unity_build\index.html" />
+    <None Include="wwwroot\unity_build\TemplateData\favicon.ico" />
+    <None Include="wwwroot\unity_build\TemplateData\fullscreen.png" />
+    <None Include="wwwroot\unity_build\TemplateData\progressEmpty.Dark.png" />
+    <None Include="wwwroot\unity_build\TemplateData\progressEmpty.Light.png" />
+    <None Include="wwwroot\unity_build\TemplateData\progressFull.Dark.png" />
+    <None Include="wwwroot\unity_build\TemplateData\progressFull.Light.png" />
+    <None Include="wwwroot\unity_build\TemplateData\progressLogo.Dark.png" />
+    <None Include="wwwroot\unity_build\TemplateData\progressLogo.Light.png" />
+    <None Include="wwwroot\unity_build\TemplateData\style.css" />
+    <None Include="wwwroot\unity_build\TemplateData\UnityProgress.js" />
+    <None Include="wwwroot\unity_build\TemplateData\webgl-logo.png" />
+  </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ using CloudinaryDotNet;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.StaticFiles;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -73,7 +74,7 @@ builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ITicketsRepository, TicketsRepository>();
-
+    
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = "AAAAAAAAAAAAAAAAAAAAMACARENA";
@@ -100,7 +101,14 @@ app.UseRequestLocalization(localizationOptions);
 
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".unityweb"] = "application/octet-stream";
+provider.Mappings[".data"] = "application/octet-stream";
+provider.Mappings[".wasm"] = "application/wasm";
+
+
+app.UseStaticFiles(CustomStaticFileOptions.GetOptions());
 
 app.UseRouting();
 
@@ -149,4 +157,57 @@ static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleM
             await userManager.AddToRoleAsync(adminUser, UserRoles.Admin);
         }
     }
+}
+
+
+public static class CustomStaticFileOptions
+{
+	private class CustomContentTypeProvider : IContentTypeProvider
+	{
+		private const string GZIP_EXTENSION = ".gz";
+		private const string BROTLI_EXTENSION = ".br";
+
+		public static readonly IReadOnlyDictionary<string, string> COMPRESSION_ENCODINGS = new Dictionary<string, string>()
+		{
+			{ GZIP_EXTENSION, "gzip" },
+			{ BROTLI_EXTENSION, "br" }
+		};
+
+		private readonly FileExtensionContentTypeProvider fileTypeProvider = new();
+
+		public CustomContentTypeProvider()
+		{
+			fileTypeProvider.Mappings[".data"] = "application/octet-stream";
+			fileTypeProvider.Mappings[".wasm"] = "application/wasm";
+			fileTypeProvider.Mappings[".unityweb"] = "application/octet-stream";
+		}
+
+		public bool TryGetContentType(string filePath, out string contentType)
+		{
+			var extension = Path.GetExtension(filePath);
+			if (extension == GZIP_EXTENSION || extension == BROTLI_EXTENSION)
+			{
+				filePath = filePath[..^extension.Length];
+				extension = Path.GetExtension(filePath);
+			}
+
+			return fileTypeProvider.TryGetContentType(filePath, out contentType);
+		}
+	}
+
+	public static StaticFileOptions GetOptions()
+	{
+		var fileTypeProvider = new CustomContentTypeProvider();
+		return new StaticFileOptions
+		{
+			ContentTypeProvider = fileTypeProvider,
+			OnPrepareResponse = context =>
+			{
+				if (CustomContentTypeProvider.COMPRESSION_ENCODINGS.TryGetValue(Path.GetExtension(context.File.Name), out var encoding))
+				{
+					context.Context.Response.Headers["Content-Encoding"] = encoding;
+				}
+			}
+		};
+	}
 }

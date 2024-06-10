@@ -1,0 +1,53 @@
+﻿@* Views/Home/UnityGame.cshtml *@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unity WebGL Build</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/unity_build/TemplateData/style.css" />
+    <script src="/unity_build/Build/UnityLoader.js"></script>
+    <script>
+        function UnityProgress(unityInstance, progress) {
+            if (!unityInstance.Module) {
+                return;
+            }
+            unityInstance.Module.canvas.style.background = "#231F20";
+            if (progress === 1) {
+                document.getElementById("loadingBar").style.display = "none";
+            } else {
+                document.getElementById("loadingBar").style.width = 100 * progress + "%";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="loadingBar" style="position: absolute; top: 50%; left: 25%; width: 50%; height: 10px; background-color: #00FF00;"></div>
+    <div id="unityContainer" style="width: 960px; height: 600px; position: relative; top: 50%; transform: translateY(-50%);"></div>
+    <script>
+        var unityInstance = UnityLoader.instantiate("unityContainer", "/unity_build/WEBGL_2D_ROGUE_LIKE.json", { onProgress: UnityProgress });
+    </script>
+</body>
+</html>
+
+
+
+
+<style>
+    .container {
+        max-width: 900px;
+    }
+
+    .embed-responsive-16by9 {
+        padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+    }
+
+    .embed-responsive-item {
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    h2 {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+    }
+</style>

@@ -91,11 +91,20 @@
 			<a asp-controller="Jira" asp-action="Index" class="btn btn-primary">@Localizer["Create a support ticket"]</a>
 		</footer>
 	</div>
+
+	<div id="customConsole" style="display: none; position: fixed; bottom: 0; width: 100%; background-color: black; color: white; padding: 10px;">
+		<input type="text" id="consoleInput" placeholder="Введите команду..." style="width: 90%; color: black;" />
+		<button onclick="executeCommand()" style="width: 10%;">Выполнить</button>
+	</div>
+
+
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+	<script src="~/js/UnityLoader.js"></script>
+	<script src="~/js/openGame.js"></script>
 	<script>
 		new Darkmode({
 			bottom: '32px', // Default: '32px'
