@@ -17,7 +17,7 @@ namespace CourseProjectItems.Controllers
 	public class JiraController : Controller
 	{
 		private readonly string _jiraBaseUrl = "https://warhammerdev.atlassian.net/";
-		private readonly string _jiraApiToken = "ATATT3xFfGF0u16zmyg4TzMZEGWQEKR4TjltTT84sO-6ADzrzETWTuPSpk3mC9R_RgYj2ga2fpdpsJvYEz5hTesjFZISFggkfk_lzennQBWtD1cQj7yKxdKtQMoVqewfIIBTzPfsFwJNB6N56yysL91ZyOFWCqq9kr1zAqjuQbvzP5sW9SIi8l0=418F17FC";
+		private readonly string _jiraApiToken = "ATATT3xFfGF0yGsqdbUIIZN39Eo_7M5OH2MpeYW2ZRFEFiLfvtJQ4JYvkSAOH-K3k-3OunG5FRN-z4JXcdgV_vi3pv0Q7e-Wg7ywIlX4x3lGMesOUM8_GmY4Jwx-46YDmWq_J1s-PTnN38tS2O_guH9398YITJOTVuudc-NTKcBcZ4CXlx37uHY=12FAE235";
 		private readonly string _jiraProjectKey = "IN";
 		public string _returnUrl = "/";
 		public string issueUrl;
