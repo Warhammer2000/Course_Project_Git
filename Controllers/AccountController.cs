@@ -55,6 +55,7 @@ namespace CourseProjectItems.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, loginViewModel.RememberMe, false);
                     if (result.Succeeded)
                     {
+                        JiraController.currentUserEmail = loginViewModel.Email;
                         return LocalRedirect(returnUrl);
                     }
                     //if (result.IsLockedOut)
